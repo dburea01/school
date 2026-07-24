@@ -10,6 +10,7 @@
 }
 
 /* Animation de la flèche pour les sous-menus */
+/*
 .btn-toggle::after {
   display: inline-block;
   content: "\F285";
@@ -21,6 +22,7 @@
 .btn-toggle[aria-expanded="true"]::after {
   transform: rotate(180deg);
 }
+  */
 
 /* Verrouillage de la hauteur pour éviter le scroll global */
 html,
