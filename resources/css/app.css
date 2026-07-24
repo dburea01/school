@@ -47,6 +47,11 @@ body {
   font-size: 2rem;
 }
 
+.content-area h2 {
+  color: var(--fontColorBody);
+  font-size: 1.5rem;
+}
+
 /* Personnalisation du menu compact */
 .custom-sidebar {
   background-color: var(--sidebar-bg) !important;

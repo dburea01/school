@@ -37,13 +37,36 @@
     <!-- CONTENEUR PRINCIPAL -->
     <div class="d-flex main-wrapper">
         <!-- LE MENU VERTICAL COMPACT -->
-        <div class="offcanvas-lg offcanvas-start custom-sidebar text-dark h-100 d-flex flex-column" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel" style="min-width: 100px; max-width: 240px;">
+        <div class="offcanvas-lg offcanvas-start custom-sidebar text-dark h-100 d-flex flex-column p-2" tabindex="-1" id="sidebarMenu" style="min-width: 100px; max-width: 240px;">
 
             <div class="offcanvas-header border-bottom d-lg-none">
-                <h5 class="offcanvas-title fw-bold" style="color: var(--nav-bg);" id="sidebarMenuLabel">Navigation</h5>
+                <h5 class="offcanvas-title fw-bold" style="color: var(--nav-bg);" id="sidebarMenuLabel">Menu</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
             </div>
 
+            <a href="{{ route('home') }}" class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2">
+                @if(request()->routeIs('home'))
+                <strong><i class="bi bi-house me-2"></i>Accueil</strong>
+                @else
+                <i class="bi bi-house me-2"></i>Accueil
+                @endif
+            </a>
+            @guest
+            <a href="{{ route('login') }}" class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2">
+                @if(request()->routeIs('login'))
+                <strong><i class="bi bi-box-arrow-in-left me-2"></i>Connexion</strong>
+                @else
+                <i class="bi bi-box-arrow-in-left me-2"></i>Connexion
+                @endif
+            </a>
+            @endguest
+
+            @auth
+            <x-vertical-menu />
+            @endauth
+
+
+            {{--
             <!-- BLOC COMPTE UTILISATEUR -->
             <div class="mt-auto p-3 border-bottom bg-light-subtle d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center min-w-0">
@@ -66,75 +89,76 @@
 
                     <!-- Option Simple 1 -->
                     <a href="{{ route('home') }}" class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2">
-                        <i class="bi bi-house-door-fill text-secondary me-2"></i> Accueil
-                    </a>
-                    <a href="{{ route('login') }}" class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2">
-                        <i class="bi bi-house-door-fill text-secondary me-2"></i> Connexion
-                    </a>
-                    <!-- Menu Dynamique 1 -->
-                    <div>
-                        <button class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2 d-flex align-items-center btn-toggle"
-                            data-bs-toggle="collapse" data-bs-target="#subProjets" aria-expanded="true">
-                            <i class="bi bi-folder-fill text-warning me-2"></i> Mes Projets
-                        </button>
-                        <div class="collapse bg-white show" id="subProjets">
-                            <div class="list-group list-group-flush ps-4">
-                                <a href="#" class="list-group-item list-group-item-action bg-transparent text-secondary border-0 py-1 small">Projet Web</a>
-                                <a href="#" class="list-group-item list-group-item-action bg-transparent text-secondary border-0 py-1 small">Projet Mobile</a>
-                            </div>
-                        </div>
+            <i class="bi bi-house-door-fill text-secondary me-2"></i> Accueil
+            </a>
+            <a href="{{ route('login') }}" class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2">
+                <i class="bi bi-house-door-fill text-secondary me-2"></i> Connexion
+            </a>
+            <!-- Menu Dynamique 1 -->
+            <div>
+                <button class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2 d-flex align-items-center btn-toggle"
+                    data-bs-toggle="collapse" data-bs-target="#subProjets" aria-expanded="true">
+                    <i class="bi bi-folder-fill text-warning me-2"></i> Mes Projets
+                </button>
+                <div class="collapse bg-white show" id="subProjets">
+                    <div class="list-group list-group-flush ps-4">
+                        <a href="#" class="list-group-item list-group-item-action bg-transparent text-secondary border-0 py-1 small">Projet Web</a>
+                        <a href="#" class="list-group-item list-group-item-action bg-transparent text-secondary border-0 py-1 small">Projet Mobile</a>
                     </div>
-                    <!-- NOUVEAU : Menu Dynamique 2 -->
-                    <div>
-                        <button class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2 d-flex align-items-center btn-toggle"
-                            data-bs-toggle="collapse" data-bs-target="#subRapports" aria-expanded="true">
-                            <i class="bi bi-bar-chart-line-fill text-success me-2"></i> Rapports
-                        </button>
-                        <div class="collapse bg-white show" id="subRapports">
-                            <div class="list-group list-group-flush ps-4">
-                                <a href="#" class="list-group-item list-group-item-action bg-transparent text-secondary border-0 py-1 small">Ventes</a>
-                                <a href="#" class="list-group-item list-group-item-action bg-transparent text-secondary border-0 py-1 small">Statistiques</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- NOUVEAU : Menu Dynamique 3 (Fermé) -->
-                    <div>
-                        <button class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2 d-flex align-items-center btn-toggle"
-                            data-bs-toggle="collapse" data-bs-target="#subOutils" aria-expanded="true">
-                            <i class="bi bi-wrench-adjustable-circle-fill text-info me-2"></i> Outils
-                        </button>
-                        <div class="collapse bg-white show" id="subOutils">
-                            <div class="list-group list-group-flush ps-4">
-                                <a href="#" class="list-group-item list-group-item-action bg-transparent text-secondary border-0 py-1 small">Import / Export</a>
-                                <a href="#" class="list-group-item list-group-item-action bg-transparent text-secondary border-0 py-1 small">Logs système</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Menu Dynamique 4 (Fermé) -->
-                    <div>
-                        <button class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2 d-flex align-items-center btn-toggle"
-                            data-bs-toggle="collapse" data-bs-target="#subParametres" aria-expanded="true">
-                            <i class="bi bi-gear-fill text-secondary me-2"></i> Paramètres
-                        </button>
-                        <div class="collapse bg-white show" id="subParametres">
-                            <div class="list-group list-group-flush ps-4">
-                                <a href="#" class="list-group-item list-group-item-action bg-transparent text-secondary border-0 py-1 small">Profil</a>
-                                <a href="#" class="list-group-item list-group-item-action bg-transparent text-secondary border-0 py-1 small">Sécurité</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Option Simple 2 -->
-                    <a href="#" class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2">
-                        <i class="bi bi-envelope-fill text-secondary me-2"></i> Contact
-                    </a>
                 </div>
             </div>
-            
+            <!-- NOUVEAU : Menu Dynamique 2 -->
+            <div>
+                <button class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2 d-flex align-items-center btn-toggle"
+                    data-bs-toggle="collapse" data-bs-target="#subRapports" aria-expanded="true">
+                    <i class="bi bi-bar-chart-line-fill text-success me-2"></i> Rapports
+                </button>
+                <div class="collapse bg-white show" id="subRapports">
+                    <div class="list-group list-group-flush ps-4">
+                        <a href="#" class="list-group-item list-group-item-action bg-transparent text-secondary border-0 py-1 small">Ventes</a>
+                        <a href="#" class="list-group-item list-group-item-action bg-transparent text-secondary border-0 py-1 small">Statistiques</a>
+                    </div>
+                </div>
+            </div>
+            <!-- NOUVEAU : Menu Dynamique 3 (Fermé) -->
+            <div>
+                <button class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2 d-flex align-items-center btn-toggle"
+                    data-bs-toggle="collapse" data-bs-target="#subOutils" aria-expanded="true">
+                    <i class="bi bi-wrench-adjustable-circle-fill text-info me-2"></i> Outils
+                </button>
+                <div class="collapse bg-white show" id="subOutils">
+                    <div class="list-group list-group-flush ps-4">
+                        <a href="#" class="list-group-item list-group-item-action bg-transparent text-secondary border-0 py-1 small">Import / Export</a>
+                        <a href="#" class="list-group-item list-group-item-action bg-transparent text-secondary border-0 py-1 small">Logs système</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Menu Dynamique 4 (Fermé) -->
+            <div>
+                <button class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2 d-flex align-items-center btn-toggle"
+                    data-bs-toggle="collapse" data-bs-target="#subParametres" aria-expanded="true">
+                    <i class="bi bi-gear-fill text-secondary me-2"></i> Paramètres
+                </button>
+                <div class="collapse bg-white show" id="subParametres">
+                    <div class="list-group list-group-flush ps-4">
+                        <a href="#" class="list-group-item list-group-item-action bg-transparent text-secondary border-0 py-1 small">Profil</a>
+                        <a href="#" class="list-group-item list-group-item-action bg-transparent text-secondary border-0 py-1 small">Sécurité</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Option Simple 2 -->
+            <a href="#" class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2">
+                <i class="bi bi-envelope-fill text-secondary me-2"></i> Contact
+            </a>
         </div>
-        <!-- LE CONTENU DE LA PAGE -->
-        <div class="flex-grow-1 p-2 content-area">
-            @yield('content')
-        </div>
+    </div>
+    --}}
+    </div>
+
+    <!-- LE CONTENU DE LA PAGE -->
+    <div class="flex-grow-1 p-2 content-area">
+        @yield('content')
+    </div>
     </div>
 
 
