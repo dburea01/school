@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+:root {
+  --backGroundColorBody: rgb(240, 240, 253);
+  --backGroundColorNavBar: #0769b9;
+  --fontColorBody: rgb(88, 86, 86);
+  --fontColorNavBar: #f4fbff;
+}
+
+*{
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  /* background: rgb(240, 240, 253); */
+  background: var(--backGroundColorBody);
+  /* color: rgb(88, 86, 86) */
+  color: var(--fontColorBody)
+}
+
+.navbar, footer, .offcanvas-body, .offcanvas-header {
+  /* background-color: #0769b9; */
+  background-color: var(--backGroundColorNavBar);
+}
+
+.navbar-brand, .navbar-text, .nav-link, .footer {
+  /* color: #f4fbff; */
+  color: var(--fontColorNavBar);
+}
+
+
+.navbar-custom {
+  height: 40px;
+}
+
+.nav-link:hover, .navbar-brand:hover {
+  /* color: #f4fbff; */
+  color: var(--fontColorNavBar);
+}
+
+.nav-link.dropdown-toggle.show{
+  color: silver
+}
+
+main > .container {
+    padding: 10px 15px 0;
+}
+
+a {
+  color: black
+}
+
+footer a {
+  /* color: #f4fbff */
+  color: var(--fontColorNavBar);
+}
+
+.toast {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  z-index: 10000;
+}
+
+.custom-tooltip {
+  --bs-tooltip-bg: var(--backGroundColorNavBar);
+  --bs-tooltip-color: var(--bs-white);
+}
+

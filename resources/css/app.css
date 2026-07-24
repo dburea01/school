@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+:root {
+  --nav-bg: #6587ec;
+  --sidebar-bg: #f8fafc;
+  --sidebar-border: #e2e8f0;
+  --accent-color: #6587ec;
+  --accent-hover: #8ba2c1;
+  --fontColorBody: #586679;
+}
+
+/* Animation de la flèche pour les sous-menus */
+.btn-toggle::after {
+  display: inline-block;
+  content: "\F285";
+  font-family: "bootstrap-icons";
+  margin-left: auto;
+  transition: transform 0.2s ease;
+}
+
+.btn-toggle[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+}
+
+/* Verrouillage de la hauteur pour éviter le scroll global */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background-color: #f1f5f9;
+}
+
+.main-wrapper {
+  height: calc(100vh - 40px);
+}
+
+.content-area {
+  overflow-y: auto;
+  height: 100%;
+  background-color: #f5f6f8;
+  color: var(--fontColorBody);
+}
+
+.content-area h1 {
+  color: var(--fontColorBody);
+  font-size: 2rem;
+}
+
+/* Personnalisation du menu compact */
+.custom-sidebar {
+  background-color: var(--sidebar-bg) !important;
+  border-right: 1px solid var(--sidebar-border);
+  font-size: 0.8rem;
+}
+
+.list-group-item-action:hover {
+  background-color: var(--accent-hover) !important;
+  color: var(--accent-color) !important;
+}
+
+.list-group-item-action.active {
+  background-color: var(--accent-color) !important;
+  color: #ffffff !important;
+}
+
+/* Avatar en initiales */
+.avatar-initials {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
