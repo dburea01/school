@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('last_name');
             $table->string('first_name');
+            $table->string('role');
             $table->string('status');
             $table->string('civility')->nullable();
             $table->string('gender', 1)->nullable()->comment('M / F / X');
@@ -32,7 +33,7 @@ return new class extends Migration
             $table->text('comment')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->string('created_by');
+            $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
         });
 

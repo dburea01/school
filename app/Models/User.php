@@ -6,16 +6,36 @@ namespace App\Models;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable([
+    'last_name', 
+    'first_name',
+    'role',
+    'status',
+    'civility',
+    'gender',
+    'email',
+    'email_verified_at',
+    'password',
+    'birth_date',
+    'phone_number',
+    'address',
+    'city',
+    'postal_code',
+    'country_id',
+    'comment',
+    'created_by',
+    'updated_by'
+])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasUuids;
 
     /**
      * Get the attributes that should be cast.
@@ -28,5 +48,20 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        return $this->last_name.' '.$this->first_name;
+    }
+
+    public function setFirstNameAttribute(string $value): void
+    {
+        $this->attributes['first_name'] = ucwords($value);
+    }
+
+    public function setLastNameAttribute(string $value): void
+    {
+        $this->attributes['last_name'] = strtoupper($value);
     }
 }
