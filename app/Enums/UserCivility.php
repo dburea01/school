@@ -4,14 +4,14 @@ namespace App\Enums;
 
 enum UserCivility: string
 {
-    case MISTER = 'M';
-    case MADAM = 'MME';
+    case M = 'M';
+    case MME = 'MME';
 
     public function label(): string
     {
         return match ($this) {
-            self::MISTER => 'Monsieur',
-            self::MADAM => 'Madame',
+            self::M => 'Monsieur',
+            self::MME => 'Madame',
         };
     }
 }

@@ -31,6 +31,18 @@ class UserFactory extends Factory
     public function definition(): array
     {
         $sex = fake()->randomElement([1, 2]);
+        switch ($sex) {
+            case '1':
+                $gender = 'M';
+                break;
+            case '2':
+                $gender = 'F';
+                break;
+
+            default:
+                $gender = 'NB';
+                break;
+        }
         $firstName = str_replace(' ', '', $this->stripAccents(fake('fr_FR')->firstName($sex == 1 ? 'male' : 'female')));
         $lastName = str_replace(' ', '', $this->stripAccents(fake('fr_FR')->lastName()));
 
@@ -38,7 +50,7 @@ class UserFactory extends Factory
             'role' => fake()->randomElement(UserRole::cases()),
             'status' => fake()->randomElement(UserStatus::cases()),
             'civility' => fake()->randomElement(UserCivility::cases()),
-            'gender' => $sex,
+            'gender' => $gender,
             'first_name' => $firstName,
             'last_name' => $lastName,
             'birth_date' => fake()->date(),

@@ -19,11 +19,13 @@ class UserSeeder extends Seeder
         User::factory()->create([
             'role' => 'ADMIN',
             'status' => 'ACTIVE',
+            'gender' => null,
         ]);
 
         // some teachers
         User::factory()->count(rand(5, 10))->create([
             'role' => 'TEACHER',
+            'gender' => null
         ]);
 
         // some families
@@ -33,14 +35,14 @@ class UserSeeder extends Seeder
             // 1 father and 1 mother
             $father = User::factory()->create([
                 'role' => 'PARENT',
-                'civility' => 'MISTER',
+                'civility' => 'M',
                 'last_name' => $lastName,
                 'gender' => null,
             ]);
 
             $mother = User::factory()->create([
                 'role' => 'PARENT',
-                'civility' => 'MADAM',
+                'civility' => 'MME',
                 'last_name' => $lastName,
                 'gender' => null,
             ]);

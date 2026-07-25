@@ -4,16 +4,16 @@ namespace App\Enums;
 
 enum UserGender: string
 {
-    case MALE = 'M';
-    case FEMALE = 'F';
-    case NONBINARY = 'NB';
+    case M = 'M';
+    case F = 'F';
+    case NB = 'NB';
 
     public function label(): string
     {
         return match ($this) {
-            self::MALE => 'Masculin',
-            self::FEMALE => 'Féminin',
-            self::NONBINARY => 'Non binaire'
+            self::M => 'Masculin',
+            self::F => 'Féminin',
+            self::NB => 'Non binaire'
         };
     }
 }
