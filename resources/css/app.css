@@ -9,21 +9,6 @@
   --fontColorBody: #586679;
 }
 
-/* Animation de la flèche pour les sous-menus */
-/*
-.btn-toggle::after {
-  display: inline-block;
-  content: "\F285";
-  font-family: "bootstrap-icons";
-  margin-left: auto;
-  transition: transform 0.2s ease;
-}
-
-.btn-toggle[aria-expanded="true"]::after {
-  transform: rotate(180deg);
-}
-  */
-
 /* Verrouillage de la hauteur pour éviter le scroll global */
 html,
 body {
@@ -46,12 +31,22 @@ body {
 
 .content-area h1 {
   color: var(--fontColorBody);
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .content-area h2 {
   color: var(--fontColorBody);
-  font-size: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.content-area label{
+  color: var(--fontColorBody);
+  font-size: 0.8rem;
+}
+
+.content-area input{
+  color: var(--fontColorBody);
+  font-size: 0.8rem;
 }
 
 /* Personnalisation du menu compact */

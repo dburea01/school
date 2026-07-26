@@ -28,15 +28,15 @@
                 <i class="bi bi-list"></i> Menu
             </button>
 
-            <span class="navbar-brand mb-0 h6 text-white-50 py-0">Lycée Bali Bala</span>
-            <span class="navbar-brand mb-0 h6 text-white-50 py-0">Année scolaire 2026/2027</span>
+            <span class="navbar-brand mb-0">{{ $school?->name }}</span>
+            <span class="navbar-brand mb-0">Année scolaire 2026/2027</span>
         </div>
     </nav>
 
 
-    <!-- CONTENEUR PRINCIPAL -->
+    {{-- CONTENEUR PRINCIPAL --}}
     <div class="d-flex main-wrapper">
-        <!-- LE MENU VERTICAL COMPACT -->
+        {{-- LE MENU VERTICAL COMPACT --}}
         <div class="offcanvas-lg offcanvas-start custom-sidebar text-dark h-100 d-flex flex-column p-2" tabindex="-1" id="sidebarMenu" style="min-width: 170px; max-width: 170px;">
 
             <div class="offcanvas-header border-bottom d-lg-none">

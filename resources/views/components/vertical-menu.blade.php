@@ -8,13 +8,17 @@
 </a>
 @endcan
 
-<a href="" class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2">
-    @if(request()->routeIs('option2'))
-    <strong><i class="bi bi-house me-2"></i>Option2</strong>
+@can('viewAny', App\Models\User::class)
+<a href="#" class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2">
+    @if(request()->routeIs('users.index'))
+    <strong><i class="bi bi-people me-2"></i>Utilisateurs</strong>
     @else
-    <i class="bi bi-house me-2"></i>Option 2
+    <i class="bi bi-people me-2"></i>Utilisateurs
     @endif
 </a>
+@endcan
+
+
 
 
 <div class="mt-auto p-3 border-bottom bg-light-subtle text-center">
