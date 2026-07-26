@@ -37,7 +37,7 @@
     <!-- CONTENEUR PRINCIPAL -->
     <div class="d-flex main-wrapper">
         <!-- LE MENU VERTICAL COMPACT -->
-        <div class="offcanvas-lg offcanvas-start custom-sidebar text-dark h-100 d-flex flex-column p-2" tabindex="-1" id="sidebarMenu" style="min-width: 100px; max-width: 240px;">
+        <div class="offcanvas-lg offcanvas-start custom-sidebar text-dark h-100 d-flex flex-column p-2" tabindex="-1" id="sidebarMenu" style="min-width: 170px; max-width: 170px;">
 
             <div class="offcanvas-header border-bottom d-lg-none">
                 <h5 class="offcanvas-title fw-bold" style="color: var(--nav-bg);" id="sidebarMenuLabel">Menu</h5>
@@ -156,7 +156,7 @@
     </div>
 
     <!-- LE CONTENU DE LA PAGE -->
-    <div class="flex-grow-1 p-2 content-area">
+    <div class="flex-grow-1 p-3 content-area">
         @yield('content')
     </div>
     </div>

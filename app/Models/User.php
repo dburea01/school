@@ -17,7 +17,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 #[Fillable([
-    'last_name', 
+    'last_name',
     'first_name',
     'role',
     'status',
@@ -59,9 +59,25 @@ class User extends Authenticatable
         ];
     }
 
+    public function getInitialsAttribute(): string
+    {
+        $fullName = trim($this->full_name);
+
+        if ($fullName === '') {
+            return '';
+        }
+
+        $words = preg_split('/\s+/', $fullName);
+
+        return collect($words)
+            ->take(2)
+            ->map(fn($word) => mb_strtoupper(mb_substr($word, 0, 1)))
+            ->implode('');
+    }
+
     public function getFullNameAttribute(): string
     {
-        return $this->last_name.' '.$this->first_name;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
     public function setFirstNameAttribute(string $value): void

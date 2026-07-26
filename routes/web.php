@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,3 +29,13 @@ Route::get('password-lost', function () {
 Route::post('password-lost', [AuthController::class, 'passwordResetRequest'])->name('password-lost');
 Route::get('password-reset/{token}', [AuthController::class, 'formPasswordReset'])->where('token', '[A-Za-z0-9]{40}')->name('password-reset');
 Route::post('password-reset', [AuthController::class, 'passwordReset']);
+
+/*
+|--------------------------------------------------------------------------
+| routes with authentication
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth'])->group(function () {
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
+});

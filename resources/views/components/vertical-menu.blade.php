@@ -1,14 +1,47 @@
-<div class="mt-auto p-3 border-bottom bg-light-subtle d-flex align-items-center justify-content-between">
-    <div class="d-flex align-items-center min-w-0">
-        <div class="avatar-initials bg-primary text-white me-2 flex-shrink-0">
-            JD
+<a href="" class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2">
+    @if(request()->routeIs('option1'))
+    <strong><i class="bi bi-house me-2"></i>Option1</strong>
+    @else
+    <i class="bi bi-house me-2"></i>Option 1
+    @endif
+</a>
+
+<a href="" class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2">
+    @if(request()->routeIs('option2'))
+    <strong><i class="bi bi-house me-2"></i>Option2</strong>
+    @else
+    <i class="bi bi-house me-2"></i>Option 2
+    @endif
+</a>
+
+
+<div class="mt-auto p-3 border-bottom bg-light-subtle text-center">
+    <div class="d-flex flex-column align-items-center">
+
+        
+        <div class="avatar-initials bg-primary text-white mb-2 flex-shrink-0">
+            {{ Auth::user()->initials }}
         </div>
-        <div class="min-w-0">
-            <p class="mb-0 fw-bold text-dark text-truncate" style="font-size: 0.85rem;">John Doe</p>
-            <span class="text-secondary d-block text-truncate" style="font-size: 0.75rem;">Administrateur</span>
+
+       
+        <div class="min-w-0 w-100">
+            <p class="mb-0 fw-bold text-dark text-truncate">
+                {{ Auth::user()->full_name }}
+            </p>
+
+            <span class="text-secondary d-block text-truncate">
+                {{ Auth::user()->role->label() }}
+            </span>
         </div>
+
+        
+        <a href="{{ route('logout') }}" 
+           class="mt-2 text-secondary hover-primary text-decoration-none"
+           title="Déconnexion">
+            <i class="bi bi-box-arrow-right text-danger"></i>
+            <span class="text-danger">Déconnexion</span>
+        </a>
+
     </div>
-    <a href="#" class="text-secondary hover-primary ps-2" title="Déconnexion">
-        <i class="bi bi-box-arrow-right fs-5 text-danger"></i>
-    </a>
 </div>
+

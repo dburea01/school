@@ -22,6 +22,13 @@ class UserSeeder extends Seeder
             'gender' => null,
         ]);
 
+        // 1 director
+        User::factory()->create([
+            'role' => 'DIRECTOR',
+            'status' => 'ACTIVE',
+            'gender' => null,
+        ]);
+
         // some teachers
         User::factory()->count(rand(5, 10))->create([
             'role' => 'TEACHER',
