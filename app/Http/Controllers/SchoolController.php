@@ -2,34 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateSchoolRequest;
 use App\Models\School;
-use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class SchoolController extends Controller
 {
-    public function edit()
+    use AuthorizesRequests;
+
+    public function edit(): View
     {
+        $this->authorize('update', School::class);
+
         $school = School::firstOrCreate([], [
-            'name' => 'Mon École',
-            'country_id' => 'FR'
+            'name' => 'Mon école',
+            'country_id' => 'FR',
         ]);
 
         return view('school.edit', [
-            'school' => $school
+            'school' => $school,
         ]);
     }
 
-    public function update(Request $request)
+    public function update(UpdateSchoolRequest $request): RedirectResponse
     {
         $school = School::firstOrFail();
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'address' => 'required|string|max:500',
-            // tes autres règles de validation...
-        ]);
-
-        $school->update($validated);
+        $school->update($request->validated());
 
         return back()->with('success', 'Les informations de l\'école ont été mises à jour.');
     }

@@ -17,7 +17,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * @property UserStatus $status <-- C'EST CETTE LIGNE QUI DIT À LARASTAN LE TYPE EXACT
+ * @property UserStatus $status
+ * @property UserRole $role
  */
 #[Fillable([
     'last_name',
@@ -91,5 +92,30 @@ class User extends Authenticatable
     public function setLastNameAttribute(string $value): void
     {
         $this->attributes['last_name'] = strtoupper($value);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role == UserRole::ADMIN;
+    }
+
+    public function isDirector(): bool
+    {
+        return $this->role == UserRole::DIRECTOR;
+    }
+
+    public function isTeacher(): bool
+    {
+        return $this->role == UserRole::TEACHER;
+    }
+
+    public function isParent(): bool
+    {
+        return $this->role == UserRole::PARENT;
+    }
+
+    public function isStudent(): bool
+    {
+        return $this->role == UserRole::STUDENT;
     }
 }

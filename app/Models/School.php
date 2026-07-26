@@ -17,5 +17,10 @@ use Illuminate\Database\Eloquent\Model;
 ])]
 class School extends Model
 {
-    use HasUuids, HasCreatedUpdatedBy;
+    use HasCreatedUpdatedBy, HasUuids;
+
+    public function setCityAttribute(string $value): void
+    {
+        $this->attributes['city'] = strtoupper($value);
+    }
 }

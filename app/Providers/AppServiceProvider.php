@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\School;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +24,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Paginator::useBootstrapFive();
+
+        // Implicitly grant "Admin" role all permissions
+        Gate::before(function ($user, $ability) {
+            return $user->isAdmin() ? true : null;
+        });
+
+        if (config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
+
+        // On partage la variable $currentOrganization avec TOUTES les vues Blade de l'appli
+        // On utilise une fonction anonyme pour que la requête SQL ne soit exécutée que si une vue est affichée
+        View::share('school', School::first());
     }
 }
