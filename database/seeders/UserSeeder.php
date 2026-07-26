@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
         // some teachers
         User::factory()->count(rand(5, 10))->create([
             'role' => 'TEACHER',
-            'gender' => null
+            'gender' => null,
         ]);
 
         // some families
@@ -68,7 +68,7 @@ class UserSeeder extends Seeder
     }
 
     /** @param Collection<int,User> $students */
-    public function create_relation_ships(User $parent, $students)
+    public function create_relation_ships(User $parent, $students): void
     {
 
         foreach ($students as $student) {

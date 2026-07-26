@@ -58,7 +58,7 @@
                         @enderror
                     </div>
 
-                    {{-- REMEMBER --}}
+                    {{-- remember --}}
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="form-check">
                             <input class="form-check-input"
@@ -80,7 +80,7 @@
 
                         <a href="{{ route('password-lost') }}"
                             class="text-center small text-decoration-none text-muted">
-                            Mot de passe oublié ? (@todo)
+                            Mot de passe oublié ?
                         </a>
                     </div>
 

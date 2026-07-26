@@ -1,0 +1,31 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+ 
+parameters:
+    paths:
+        - app/
+        # - tests/
+        - database/
+        - routes/
+        - resources/
+    
+    ignoreErrors:
+        # to ignore these errors :  Call to an undefined method Symfony\Component\HttpFoundation\Request::all().
+        # '#Call to an undefined method [a-zA-Z0-9\\_::]#'
+
+        # to ignore this error :  Access to an undefined property App\Http\Resources\LocationResource::$id.
+        # - '#Access to an undefined property App\\Http\\Resources\\[a-zA-Z0-9::a-zA-Z]#'
+    
+        # to ignore this error :  Cannot access property $id on object|string|null.
+        # - '#Cannot access property \$[a-zA-Z0-9]#'
+    
+    # to ignore the iterable array value
+    # checkMissingIterableValueType: false
+        
+    tmpDir: build/phpstan
+
+    # Level 9 is the highest level
+    level: 8
+
+    
+    

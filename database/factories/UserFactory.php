@@ -3,18 +3,15 @@
 namespace Database\Factories;
 
 use App\Enums\UserCivility;
-use App\Enums\UserGender;
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
-use App\Models\Civility;
-use App\Models\Country;
-use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends Factory<User>
  */
 class UserFactory extends Factory
 {
@@ -56,10 +53,10 @@ class UserFactory extends Factory
             'birth_date' => fake()->date(),
             'email' => function (array $attributes) {
                 return strtolower($attributes['first_name'])
-                    . '.'
-                    . strtolower($attributes['last_name'])
-                    . '@'
-                    . fake()->domainName();
+                    .'.'
+                    .strtolower($attributes['last_name'])
+                    .'@'
+                    .fake()->domainName();
             },
             'email_verified_at' => now(),
             'phone_number' => fake('fr_FR')->phoneNumber(),

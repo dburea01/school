@@ -16,6 +16,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property UserStatus $status <-- C'EST CETTE LIGNE QUI DIT À LARASTAN LE TYPE EXACT
+ */
 #[Fillable([
     'last_name',
     'first_name',
@@ -34,13 +37,13 @@ use Illuminate\Notifications\Notifiable;
     'country_id',
     'comment',
     'created_by',
-    'updated_by'
+    'updated_by',
 ])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasUuids;
+    use HasFactory, HasUuids, Notifiable;
 
     /**
      * Get the attributes that should be cast.
@@ -55,7 +58,7 @@ class User extends Authenticatable
             'role' => UserRole::class,
             'civility' => UserCivility::class,
             'gender' => UserGender::class,
-            'status' => UserStatus::class
+            'status' => UserStatus::class,
         ];
     }
 
@@ -67,17 +70,17 @@ class User extends Authenticatable
             return '';
         }
 
-        $words = preg_split('/\s+/', $fullName);
+        $words = preg_split('/\s+/', $fullName) ?: [];
 
         return collect($words)
             ->take(2)
-            ->map(fn($word) => mb_strtoupper(mb_substr($word, 0, 1)))
+            ->map(fn ($word) => mb_strtoupper(mb_substr($word, 0, 1)))
             ->implode('');
     }
 
     public function getFullNameAttribute(): string
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->first_name.' '.$this->last_name;
     }
 
     public function setFirstNameAttribute(string $value): void
