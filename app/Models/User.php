@@ -62,7 +62,7 @@ class User extends Authenticatable
             'status' => UserStatus::class,
         ];
     }
-
+    /*
     public function getInitialsAttribute(): string
     {
         $fullName = trim($this->full_name);
@@ -78,10 +78,18 @@ class User extends Authenticatable
             ->map(fn ($word) => mb_strtoupper(mb_substr($word, 0, 1)))
             ->implode('');
     }
+*/
+    public function getInitialsAttribute(): string
+    {
+        $first = mb_substr($this->first_name ?? '', 0, 1);
+        $last  = mb_substr($this->last_name ?? '', 0, 1);
+
+        return strtoupper($first . $last);
+    }
 
     public function getFullNameAttribute(): string
     {
-        return $this->first_name.' '.$this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
     public function setFirstNameAttribute(string $value): void

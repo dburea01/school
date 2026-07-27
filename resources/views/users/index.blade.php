@@ -101,30 +101,32 @@
                             <tr>
 
                                 {{-- USER --}}
-                                <td>
-                                    <div class="d-flex align-items-start gap-2">
 
-                                        <div>
-                                            @can('update', $user)
-                                            <a href="{{ route('users.edit', $user) }}"
-                                                class="fw-semibold text-decoration-none">
+                                <td class="align-middle">
+                                    <div class="d-flex align-items-center gap-3">
+
+                                        {{-- AVATAR or INITIALES --}}
+                                        @if ($user->avatar_url)
+                                        <img src="{{ $user->avatar_url }}"
+                                            alt="{{ $user->name }}"
+                                            class="rounded-circle object-fit-cover flex-shrink-0"
+                                            width="44"
+                                            height="44">
+                                        @else
+                                        <div class="avatar-initials bg-secondary-subtle text-secondary-emphasis">
+                                            {{ $user->initials }}
+                                        </div>
+                                        @endif
+
+                                        {{-- NOM + EMAIL --}}
+                                        <div class="lh-sm min-w-0">
+                                            <a href="{{ route('users.show', $user) }}" class="fw-bold text-primary text-decoration-none d-block text-truncate">
                                                 {{ $user->full_name }}
                                             </a>
-                                            <div class="text-muted small">
+                                            <small class="text-muted text-truncate d-block">
                                                 {{ $user->email }}
-                                            </div>
-                                            @else
-                                            <div class="fw-semibold">
-                                                {{ $user->full_name }}
-                                            </div>
-                                            <div class="text-muted small">
-                                                {{ $user->email }}
-                                            </div>
-                                            @endcan
-
+                                            </small>
                                         </div>
-
-
 
                                     </div>
                                 </td>
@@ -139,7 +141,7 @@
 
                                 {{-- ADDRESS --}}
                                 <td class="text-muted small">
-                                    {{ $user->address }} {{ $user->postal_code }} {{ $user->city }}
+                                    {{ $user->postal_code }} {{ $user->city }}
                                 </td>
 
                                 {{-- ACTIONS --}}
@@ -171,8 +173,7 @@
 
             {{-- PAGINATION --}}
             <div class="card-body">
-                {{ $users->onEachSide(1) }}
-                {{ $users->withQueryString()->links() }}
+                {{ $users->withQueryString()->onEachSide(2)->links() }}
             </div>
 
         </div>
@@ -190,9 +191,9 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title">
+                <p class="modal-title">
                     Supprimer <span id="user-name-to-delete"></span> (<span id="user-role-to-delete"></span>)
-                </h5>
+                </p>
 
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>

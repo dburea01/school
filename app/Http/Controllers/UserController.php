@@ -56,7 +56,7 @@ class UserController extends Controller
         $this->authorize('create', User::class);
 
         $user = new User;
-        $user->role_id = 'MEMBER';
+        $user->role = 'STUDENT';
         $user->country_id = 'FR';
 
         return view('users.edit', [
@@ -154,7 +154,7 @@ class UserController extends Controller
         try {
             $user->delete();
 
-            return redirect()->route('users.index')->with('success', "$user->full_name supprimé");
+            return back()->with('success', "$user->full_name supprimé");
         } catch (\Exception $e) {
             Log::error($e->getMessage());
 
