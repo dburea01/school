@@ -9,7 +9,7 @@
 @endcan
 
 @can('viewAny', App\Models\User::class)
-<a href="#" class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2">
+<a href="{{ route('users.index') }}" class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2">
     @if(request()->routeIs('users.index'))
     <strong><i class="bi bi-people me-2"></i>Utilisateurs</strong>
     @else

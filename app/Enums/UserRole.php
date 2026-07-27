@@ -20,4 +20,15 @@ enum UserRole: string
             self::STUDENT => 'Ecolier',
         };
     }
+
+    public function badgeClass(): string
+    {
+        return match ($this) {
+            self::ADMIN => 'bg-danger-subtle text-danger-emphasis',
+            self::DIRECTOR => 'bg-warning-subtle text-warning-emphasis',
+            self::TEACHER => 'bg-primary-subtle text-primary-emphasis',
+            self::PARENT => 'bg-info-subtle text-info-emphasis',
+            self::STUDENT => 'bg-success-subtle text-success-emphasis',
+        };
+    }
 }
