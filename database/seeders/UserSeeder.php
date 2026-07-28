@@ -42,14 +42,12 @@ class UserSeeder extends Seeder
             // 1 father and 1 mother
             $father = User::factory()->create([
                 'role' => 'PARENT',
-                'civility' => 'M',
                 'last_name' => $lastName,
                 'gender' => null,
             ]);
 
             $mother = User::factory()->create([
                 'role' => 'PARENT',
-                'civility' => 'MME',
                 'last_name' => $lastName,
                 'gender' => null,
             ]);
@@ -57,8 +55,7 @@ class UserSeeder extends Seeder
             // some students
             $students = User::factory()->count(rand(1, 3))->create([
                 'last_name' => $lastName,
-                'role' => 'STUDENT',
-                'civility' => null,
+                'role' => 'STUDENT'
             ]);
 
             // the links between parents and students

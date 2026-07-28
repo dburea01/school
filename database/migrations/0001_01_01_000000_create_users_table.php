@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('role');
             $table->string('status');
-            $table->string('civility')->nullable();
+            // $table->string('civility')->nullable();
             $table->string('gender', 1)->nullable()->comment('M / F / X');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

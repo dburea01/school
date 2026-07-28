@@ -60,6 +60,32 @@
                             @enderror
                         </div>
 
+                        {{-- role --}}
+                        <div class="col-md-3">
+                            <label for="role" class="form-label">Rôle *</label>
+                            <x-select-user-role name="role"
+                                id="role"
+                                class="form-select form-select-sm"
+                                :disabled="$readonly"
+                                :value="old('role', $user->role->value)" />
+                            @error('role')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- gender --}}
+                        <div class="col-md-2">
+                            <label for="gender" class="form-label">Genre</label>
+                            <x-select-user-gender name="gender"
+                                id="gender"
+                                class="form-select form-select-sm"
+                                :disabled="$readonly"
+                                :value="old('gender', $user->gender?->value)" />
+                            @error('gender')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
 
                         {{-- Address --}}
                         <div class="col-12">
@@ -125,6 +151,34 @@
                             @enderror
                         </div>
 
+
+                        {{-- email --}}
+                        <div class="col-md-4">
+                            <label for="email" class="form-label">Adresse mail</label>
+                            <input type="email"
+                                id="email"
+                                name="email"
+                                @readonly($readonly)
+                                class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                value="{{ old('email', $user->email) }}">
+                            @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- phone number --}}
+                        <div class="col-md-4">
+                            <label for="phone_number" class="form-label">Télèphone</label>
+                            <input type="text"
+                                id="phone_number"
+                                name="phone_number"
+                                @readonly($readonly)
+                                class="form-control form-control-sm @error('phone_number') is-invalid @enderror"
+                                value="{{ old('phone_number', $user->phone_number) }}">
+                            @error('phone_number')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
 
                     {{-- Actions --}}

@@ -52,7 +52,7 @@ class UserFactory extends Factory
         return [
             'role' => fake()->randomElement(UserRole::cases()),
             'status' => fake()->randomElement(UserStatus::cases()),
-            'civility' => fake()->randomElement(UserCivility::cases()),
+            
             'gender' => $gender,
             'first_name' => $firstName,
             'last_name' => $lastName,

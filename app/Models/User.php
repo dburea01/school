@@ -25,7 +25,6 @@ use Illuminate\Notifications\Notifiable;
     'first_name',
     'role',
     'status',
-    'civility',
     'gender',
     'email',
     'email_verified_at',
@@ -62,23 +61,7 @@ class User extends Authenticatable
             'status' => UserStatus::class,
         ];
     }
-    /*
-    public function getInitialsAttribute(): string
-    {
-        $fullName = trim($this->full_name);
-
-        if ($fullName === '') {
-            return '';
-        }
-
-        $words = preg_split('/\s+/', $fullName) ?: [];
-
-        return collect($words)
-            ->take(2)
-            ->map(fn ($word) => mb_strtoupper(mb_substr($word, 0, 1)))
-            ->implode('');
-    }
-*/
+    
     public function getInitialsAttribute(): string
     {
         $first = mb_substr($this->first_name ?? '', 0, 1);

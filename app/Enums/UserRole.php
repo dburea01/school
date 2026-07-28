@@ -17,7 +17,7 @@ enum UserRole: string
             self::DIRECTOR => 'Directeur',
             self::TEACHER => 'Enseignant',
             self::PARENT => 'Parent',
-            self::STUDENT => 'Ecolier',
+            self::STUDENT => 'Elève',
         };
     }
 

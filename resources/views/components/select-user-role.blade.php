@@ -1,7 +1,9 @@
 <select {{ $attributes }}>
-    <option value="" @if (''===$value) selected @endif>-- rôle --</option>
+    <option value="" @selected(blank($value))>-- rôle --</option>
 
     @foreach($userRoles as $userRole)
-    <option value="{{ $userRole }}" @if ($userRole->value==$value) selected @endif>{{ $userRole->label() }}</option>
+        <option value="{{ $userRole->value }}" @selected($userRole->value === $value)>
+            {{ $userRole->label() }}
+        </option>
     @endforeach
 </select>

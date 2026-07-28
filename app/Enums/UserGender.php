@@ -6,14 +6,14 @@ enum UserGender: string
 {
     case M = 'M';
     case F = 'F';
-    case NB = 'NB';
+    case A = 'A';
 
     public function label(): string
     {
         return match ($this) {
             self::M => 'Masculin',
             self::F => 'Féminin',
-            self::NB => 'Non binaire'
+            self::A => 'Autre'
         };
     }
 }
