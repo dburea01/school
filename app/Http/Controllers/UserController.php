@@ -46,8 +46,6 @@ class UserController extends Controller
         ]);
     }
 
-   
-
     /**
      * Show the form for creating a new resource.
      */
@@ -61,6 +59,8 @@ class UserController extends Controller
 
         return view('users.edit', [
             'user' => $user,
+            'readonly' => false,
+            'pageTitle' => 'Créer utilisateur'
         ]);
     }
 
@@ -94,9 +94,15 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user): void
+    public function show(User $user): View
     {
-        //
+        $this->authorize('view', $user);
+
+        return view('users.edit', [
+            'user' => $user,
+            'readonly' => true,
+            'pageTitle' => 'Fiche utilisateur'
+        ]);
     }
 
     /**
@@ -108,6 +114,8 @@ class UserController extends Controller
 
         return view('users.edit', [
             'user' => $user,
+            'readonly' => false,
+            'pageTitle' => 'Modifier utilisateur'
         ]);
     }
 

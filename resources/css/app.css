@@ -47,6 +47,11 @@ body {
   font-size: 0.8rem;
 }
 
+/* style des forms */
+.form-control[readonly] {
+    background-color: var(--bs-secondary-bg);
+}
+
 /* Personnalisation du menu compact */
 .custom-sidebar {
   background-color: var(--sidebar-bg) !important;

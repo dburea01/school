@@ -120,7 +120,7 @@
 
                                         {{-- NOM + EMAIL --}}
                                         <div class="lh-sm min-w-0">
-                                            <a href="{{ route('users.show', $user) }}" class="fw-bold text-primary text-decoration-none d-block text-truncate">
+                                            <a href="{{ route('users.edit', $user) }}" class="fw-bold text-primary text-decoration-none d-block text-truncate">
                                                 {{ $user->full_name }}
                                             </a>
                                             <small class="text-muted text-truncate d-block">
