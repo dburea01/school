@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="No backend? No problem. Get a free sandbox API key to practice API integration, test front-end apps, and master Postman in a resettable environment.">
+    <meta name="description" content="An open school system management">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="robots" content="index, follow">
     <title>@yield('title')</title>

@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-
 :root {
   --nav-bg: #6587ec;
   --sidebar-bg: #f8fafc;
@@ -39,12 +37,12 @@ body {
   font-size: 1.1rem;
 }
 
-.content-area label{
+.content-area label {
   color: var(--fontColorBody);
   font-size: 0.8rem;
 }
 
-.content-area input{
+.content-area input {
   color: var(--fontColorBody);
   font-size: 0.8rem;
 }
@@ -84,4 +82,3 @@ body {
   right: 30px;
   z-index: 10000;
 }
-

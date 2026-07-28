@@ -2,21 +2,19 @@
 
 namespace Database\Seeders;
 
+use App\Models\School;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class SchoolSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      */
     public function run(): void
     {
-        $this->call([
-            SchoolSeeder::class,
-            UserSeeder::class,
+        School::create([
+            'name' => 'Mon école'
         ]);
     }
 }

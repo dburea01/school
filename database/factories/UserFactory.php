@@ -43,6 +43,12 @@ class UserFactory extends Factory
         $firstName = str_replace(' ', '', $this->stripAccents(fake('fr_FR')->firstName($sex == 1 ? 'male' : 'female')));
         $lastName = str_replace(' ', '', $this->stripAccents(fake('fr_FR')->lastName()));
 
+        $avatarUrls = [
+            'https://plus.unsplash.com/premium_photo-1689551670902-19b441a6afde?q=80&w=50&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=50&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            'https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?q=80&w=50&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+        ];
+
         return [
             'role' => fake()->randomElement(UserRole::cases()),
             'status' => fake()->randomElement(UserStatus::cases()),
@@ -65,7 +71,7 @@ class UserFactory extends Factory
             'city' => fake('fr_FR')->city(),
             'country_id' => 'FR',
             'comment' => fake('fr_FR')->sentence(),
-
+            'avatar_url' => fake()->boolean(20) ? fake()->randomElement($avatarUrls) : null,
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
