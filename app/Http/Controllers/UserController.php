@@ -69,24 +69,13 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request): RedirectResponse
     {
-        DB::beginTransaction();
         try {
-            $user = User::create($request->validated());
+            $user = User::create($request->validated() + ['status' => 'ACTIVE']);
 
-            if ($request->can_connect == 1) {
-                $this->userService->sendActivationEmail($user);
-                $message = $user->full_name.' créé. Un email a été envoyé pour valider son accés.';
-            } else {
-                $message = $user->full_name.' créé';
-            }
-
-            DB::commit();
-
-            return redirect()->route('users.index')->with('success', $message);
+            return redirect()->route('users.index')->with('success', "$user->full_name créé");
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            DB::rollBack();
-
+            
             return back()->with('error', 'Erreur, utilisateur non créé')->withInput();
         }
     }
@@ -124,30 +113,17 @@ class UserController extends Controller
      */
     public function update(User $user, StoreUserRequest $request): RedirectResponse
     {
-
         DB::beginTransaction();
         try {
             $user->fill($request->validated());
 
-            $message = $user->full_name.' modifié';
-
-            if ($user->isDirty('can_connect')) {
-                $isNowAllowed = (bool) $user->can_connect;
-                $wasAllowed = (bool) $user->getOriginal('can_connect');
-                if ($isNowAllowed && ! $wasAllowed) {
-                    $this->userService->sendActivationEmail($user);
-                    $message = $user->full_name.' modifié. Un email a été envoyé pour valider son accés.';
-                }
-            }
-
             $user->save();
             DB::commit();
 
-            return redirect()->route('users.index')->with('success', $message);
+            return redirect()->route('users.index')->with('success', "$user->full_name créé");
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            DB::rollBack();
-
+            
             return back()->with('error', 'Error, utilisateur non modifié')->withInput();
         }
     }
@@ -170,19 +146,19 @@ class UserController extends Controller
         }
     }
 
-    public function duplicated(Request $request): ResourceCollection
+    public function checkDuplicates(Request $request): ResourceCollection
     {
         /** @var string $lastName */
         $lastName = $request->last_name;
         /** @var string $firstName */
         $firstName = $request->first_name;
-        /** @var string $existingUserId */
-        $existingUserId = $request->id;
+        /** @var string $ignoreId */
+        $ingnoreId = $request->ignore_id;
 
         abort_if(Str::of($lastName)->trim()->isEmpty(), 400, 'Nom est vide');
         $this->authorize('viewAny', User::class);
 
-        $duplicatedUsers = $this->userRepository->getDuplicatedUsers($existingUserId, $lastName, $firstName);
+        $duplicatedUsers = $this->userRepository->getDuplicatedUsers($ignoreId, $lastName, $firstName);
 
         return UserResource::collection($duplicatedUsers);
     }

@@ -43,4 +43,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('school/settings', [SchoolController::class, 'edit'])->name('school.edit');
     Route::put('school/settings', [SchoolController::class, 'update'])->name('school.update');
     Route::resource('users', UserController::class)->whereUuid('user');
+    Route::get('users/check-duplicates', [UserController::class, 'checkDuplicates'])->name('users.check-duplicates');
+
 });

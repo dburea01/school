@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('gender', 1)->nullable()->comment('M / F / X');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->date('birth_date')->nullable();
 
             $table->string('phone_number')->nullable();
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('postal_code')->nullable();
             $table->string('city')->nullable();
-            $table->string('country_id', 2)->nullable();
+            $table->string('country_id', 2)->default('FR')->nullable();
             $table->string('avatar_url')->nullable();
             $table->text('comment')->nullable();
             $table->rememberToken();

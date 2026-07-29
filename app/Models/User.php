@@ -56,9 +56,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'role' => UserRole::class,
-            'civility' => UserCivility::class,
             'gender' => UserGender::class,
             'status' => UserStatus::class,
+            'birth_date' => 'datetime:d/m/Y'
         ];
     }
     

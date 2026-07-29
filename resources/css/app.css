@@ -37,14 +37,9 @@ body {
   font-size: 1.1rem;
 }
 
-.content-area label {
+.content-area input, .content-area textarea, .content-area select, .content-area label {
   color: var(--fontColorBody);
-  font-size: 0.8rem;
-}
-
-.content-area input {
-  color: var(--fontColorBody);
-  font-size: 0.8rem;
+  font-size: .8rem;
 }
 
 /* style des forms */

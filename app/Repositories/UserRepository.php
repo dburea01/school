@@ -50,7 +50,7 @@ class UserRepository
     /**
      * @return Collection<int,User>
      */
-    public function getDuplicatedUsers(?string $existingUserId, string $lastName, ?string $firstName)
+    public function getDuplicatedUsers(?string $ignoreId, string $lastName, ?string $firstName)
     {
         $query = User::orderBy('last_name');
 
@@ -59,9 +59,9 @@ class UserRepository
                 ->orWhere('first_name', 'ilike', '%'.$lastName.'%');
         });
 
-        $query->when(isset($existingUserId), function ($q) use ($existingUserId) {
-            $q->where(function ($subQuery) use ($existingUserId) {
-                $subQuery->where('id', '<>', $existingUserId);
+        $query->when(isset($ignoreId), function ($q) use ($ignoreId) {
+            $q->where(function ($subQuery) use ($ignoreId) {
+                $subQuery->where('id', '<>', $ignoreId);
             });
         });
 
