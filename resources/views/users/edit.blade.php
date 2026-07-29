@@ -117,7 +117,7 @@
                         <div class="d-flex align-items-center gap-3">
                             {{-- Conteneur carré rigide 100x100 avec masque circulaire --}}
                             <div class="rounded-circle border shadow-sm overflow-hidden flex-shrink-0" style="width: 50px; height: 50px;">
-                                <img id="photo-preview" src="{{ $user->photo_url ?? asset('img/default-avatar.svg') }}"
+                                <img id="photo-preview" src="{{ $user->avatar_path ?  Storage::url($user->avatar_path) : asset('img/default-avatar.svg') }}"
                                     alt="Photo de {{ $user->first_name }}"
                                     class="w-100 h-100"
                                     style="object-fit: cover;">

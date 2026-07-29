@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class UserImageService
 {
@@ -37,5 +38,12 @@ class UserImageService
             'avatar_path' => $avatarPath,
             'photo_path' => $photoPath,
         ];
+    }
+
+    public function delete(User $user): void
+    {
+        Storage::disk('public')->deleteDirectory(
+            "users/{$user->id}"
+        );
     }
 }

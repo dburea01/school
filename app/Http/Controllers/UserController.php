@@ -132,6 +132,15 @@ class UserController extends Controller
             $user->fill($request->validated());
             $user->save();
 
+            if ($request->hasFile('photo')) {
+                $paths = $this->userImageService->store(
+                    $user,
+                    $request->file('photo')
+                );
+
+                $user->update($paths);
+            }
+
             return redirect()->route('users.index')->with('success', "$user->full_name modifié");
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -148,6 +157,7 @@ class UserController extends Controller
         $this->authorize('delete', $user);
 
         try {
+            $this->userImageService->delete($user);
             $user->delete();
 
             return back()->with('success', "$user->full_name supprimé");

@@ -106,8 +106,8 @@
                                     <div class="d-flex align-items-center gap-3">
 
                                         {{-- AVATAR or INITIALES --}}
-                                        @if ($user->avatar_url)
-                                        <img src="{{ $user->avatar_url }}"
+                                        @if ($user->avatar_path)
+                                        <img src="{{ Storage::url($user->avatar_path) }}"
                                             alt="{{ $user->name }}"
                                             class="rounded-circle object-fit-cover flex-shrink-0"
                                             width="44"
