@@ -11,9 +11,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Intervention\Image\Laravel\Facades\Image;
 
 class UserController extends Controller
 {
@@ -68,7 +71,35 @@ class UserController extends Controller
     public function store(StoreUserRequest $request): RedirectResponse
     {
         try {
-            $user = User::create($request->validated() + ['status' => 'ACTIVE']);
+            $data = $request->validated();
+
+            if ($request->hasFile('photo')) {
+                // Avatar
+                $request->image('photo')
+                    ->orient()              // corrige la rotation EXIF
+                    ->cover(150, 150)
+                    ->toWebp()
+                    ->quality(80)
+                    ->storePubliclyAs(
+                        path: 'users/avatars',
+                        name: Str::uuid()."webp",
+                        disk: 'public',
+                    );
+
+                // Grande image
+                $request->image('photo')
+                    ->orient()
+                    ->scale(width: 800)
+                    ->toWebp()
+                    ->quality(85)
+                    ->storePubliclyAs(
+                        path: 'users/photos',
+                        name: Str::uuid()."webp",
+                        disk: 'public',
+                    );
+            }
+
+            $user = User::create($data + ['status' => 'ACTIVE']);
 
             return redirect()->route('users.index')->with('success', "$user->full_name créé");
         } catch (\Exception $e) {
@@ -156,5 +187,44 @@ class UserController extends Controller
         $duplicatedUsers = $this->userRepository->getDuplicatedUsers($ignoreId, $lastName, $firstName);
 
         return UserResource::collection($duplicatedUsers);
+    }
+
+    private function uploadPhoto(UploadedFile $file, ?User $user = null): array
+    {
+        // if the user is updated, we delete the previous photo
+        if ($user) {
+            $this->deleteUserPhotos($user);
+        }
+
+        // Nom unique pour le fichier
+        $filename = Str::uuid() . '.webp';
+
+        // Redimensionnement
+        $avatarImage = Image::read($file)->cover(150, 150)->toWebp(80);
+        $largeImage  = Image::read($file)->scale(width: 800)->toWebp(85);
+
+        // Chemins de stockage
+        $avatarPath = "photos/avatars/{$filename}";
+        $largePath  = "photos/large/{$filename}";
+
+        // Enregistrement sur le disque configuré (Local ou Cloud)
+        Storage::disk()->put($avatarPath, (string) $avatarImage);
+        Storage::disk()->put($largePath, (string) $largeImage);
+
+        return [
+            'avatar_path' => $avatarPath,
+            'photo_path'  => $largePath,
+        ];
+    }
+
+    private function deleteUserPhotos(User $user): void
+    {
+        if ($user->avatar_path && Storage::disk()->exists($user->avatar_path)) {
+            Storage::disk()->delete($user->avatar_path);
+        }
+
+        if ($user->photo_path && Storage::disk()->exists($user->photo_path)) {
+            Storage::disk()->delete($user->photo_path);
+        }
     }
 }

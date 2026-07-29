@@ -52,6 +52,13 @@ class StoreUserRequest extends FormRequest
             'city' => 'nullable|max:50',
             // 'country' => 'required|size:2',
             'comment' => 'nullable|max:255',
+            'photo' => [
+                'nullable',
+                'image',
+                'mimes:png,jpg,jpeg,webp',
+                'max:2048', // Taille maximale en Ko (2048 Ko = 2 Mo)
+                // 'dimensions:min_width=200,min_height=200'
+            ],
         ];
     }
 
@@ -86,6 +93,10 @@ class StoreUserRequest extends FormRequest
             'country.size' => '2 caractères pour la code pays',
 
             'comment.max' => 'Commentaire trop long (255 caractères max)',
+
+            'photo.image' => 'Le fichier doit être une image valide.',
+            'photo.mimes' => 'Format accepté de la photo : PNG, JPG, JPEG ou WEBP.',
+            'photo.max' => 'La taille de l\'image ne doit pas dépasser 2 Mo.',
         ];
     }
 }
