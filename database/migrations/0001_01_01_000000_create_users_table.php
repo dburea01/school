@@ -30,7 +30,8 @@ return new class extends Migration
             $table->string('postal_code')->nullable();
             $table->string('city')->nullable();
             $table->string('country_id', 2)->default('FR')->nullable();
-            $table->string('avatar_url')->nullable();
+            $table->string('avatar_path')->nullable();
+            $table->string('photo_path')->nullable();
             $table->text('comment')->nullable();
             $table->rememberToken();
             $table->timestamps();

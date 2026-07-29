@@ -30,13 +30,15 @@ use Illuminate\Notifications\Notifiable;
     'password',
     'birth_date',
     'phone_number',
+    'avatar_path',
+    'photo_path',
     'address',
     'city',
     'postal_code',
     'country_id',
     'comment',
     'created_by',
-    'updated_by',
+    'updated_by'
 ])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable

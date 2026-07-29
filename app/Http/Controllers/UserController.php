@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\UserRepository;
+use App\Services\UserImageService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,10 +24,12 @@ class UserController extends Controller
     use AuthorizesRequests;
 
     private UserRepository $userRepository;
+    private UserImageService $userImageService;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, UserImageService $userImageService)
     {
         $this->userRepository = $userRepository;
+        $this->userImageService = $userImageService;
     }
 
     /**
@@ -71,35 +74,18 @@ class UserController extends Controller
     public function store(StoreUserRequest $request): RedirectResponse
     {
         try {
-            $data = $request->validated();
+            $user = User::create($request->validated() + ['status' => 'ACTIVE']);
 
             if ($request->hasFile('photo')) {
-                // Avatar
-                $request->image('photo')
-                    ->orient()              // corrige la rotation EXIF
-                    ->cover(150, 150)
-                    ->toWebp()
-                    ->quality(80)
-                    ->storePubliclyAs(
-                        path: 'users/avatars',
-                        name: Str::uuid()."webp",
-                        disk: 'public',
-                    );
+                $paths = $this->userImageService->store(
+                    $user,
+                    $request->file('photo')
+                );
 
-                // Grande image
-                $request->image('photo')
-                    ->orient()
-                    ->scale(width: 800)
-                    ->toWebp()
-                    ->quality(85)
-                    ->storePubliclyAs(
-                        path: 'users/photos',
-                        name: Str::uuid()."webp",
-                        disk: 'public',
-                    );
+                $user->update($paths);
             }
 
-            $user = User::create($data + ['status' => 'ACTIVE']);
+            
 
             return redirect()->route('users.index')->with('success', "$user->full_name créé");
         } catch (\Exception $e) {
