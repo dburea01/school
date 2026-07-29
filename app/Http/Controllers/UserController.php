@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use App\Services\UserService;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -42,7 +40,7 @@ class UserController extends Controller
             'users' => $users,
             'total_users' => $totalUsers,
             'search' => $request->query('search', ''),
-            'role' => $request->query('role', '')
+            'role' => $request->query('role', ''),
         ]);
     }
 
@@ -54,13 +52,13 @@ class UserController extends Controller
         $this->authorize('create', User::class);
 
         $user = new User;
-        $user->role = 'STUDENT';
+        $user->role = UserRole::STUDENT;
         $user->country_id = 'FR';
 
         return view('users.edit', [
             'user' => $user,
             'readonly' => false,
-            'pageTitle' => 'Créer utilisateur'
+            'pageTitle' => 'Créer utilisateur',
         ]);
     }
 
@@ -75,7 +73,7 @@ class UserController extends Controller
             return redirect()->route('users.index')->with('success', "$user->full_name créé");
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            
+
             return back()->with('error', 'Erreur, utilisateur non créé')->withInput();
         }
     }
@@ -90,7 +88,7 @@ class UserController extends Controller
         return view('users.edit', [
             'user' => $user,
             'readonly' => true,
-            'pageTitle' => 'Fiche utilisateur'
+            'pageTitle' => 'Fiche utilisateur',
         ]);
     }
 
@@ -104,7 +102,7 @@ class UserController extends Controller
         return view('users.edit', [
             'user' => $user,
             'readonly' => false,
-            'pageTitle' => 'Modifier utilisateur'
+            'pageTitle' => 'Modifier utilisateur',
         ]);
     }
 
@@ -113,18 +111,15 @@ class UserController extends Controller
      */
     public function update(User $user, StoreUserRequest $request): RedirectResponse
     {
-        DB::beginTransaction();
         try {
             $user->fill($request->validated());
-
             $user->save();
-            DB::commit();
 
-            return redirect()->route('users.index')->with('success', "$user->full_name créé");
+            return redirect()->route('users.index')->with('success', "$user->full_name modifié");
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            
-            return back()->with('error', 'Error, utilisateur non modifié')->withInput();
+
+            return back()->with('error', 'Erreur, utilisateur non modifié')->withInput();
         }
     }
 
@@ -153,7 +148,7 @@ class UserController extends Controller
         /** @var string $firstName */
         $firstName = $request->first_name;
         /** @var string $ignoreId */
-        $ingnoreId = $request->ignore_id;
+        $ignoreId = $request->ignore_id;
 
         abort_if(Str::of($lastName)->trim()->isEmpty(), 400, 'Nom est vide');
         $this->authorize('viewAny', User::class);

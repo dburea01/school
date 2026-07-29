@@ -7,14 +7,14 @@
 <div class="row justify-content-center">
     <div class="col-12 col-lg-9">
 
-        <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
             <div>
                 <h1 class="h3 fw-bold mb-1">{{ $pageTitle }}</h1>
             </div>
         </div>
 
         <div class="card border-0 shadow-sm">
-            <div class="card-body p-4">
+            <div class="card-body p-2">
 
                 @include('errors.messages-error-info')
 
@@ -108,16 +108,16 @@
                         </div>
                     </fieldset>
 
-                    <!-- SECTION 2 : PHOTO DE PROFIL -->
+                    {{-- the photo --}}
                     <fieldset class="mb-3">
                         <legend class="h6 fw-bold text-primary border-bottom pb-1 mb-2">
-                            Photo de profil
+                            Photo
                         </legend>
 
                         <div class="d-flex align-items-center gap-3">
                             {{-- Conteneur carré rigide 100x100 avec masque circulaire --}}
-                            <div class="rounded-circle border shadow-sm overflow-hidden flex-shrink-0" style="width: 100px; height: 100px;">
-                                <img id="photo-preview" src="{{ $user->photo_url ?? asset('images/default-avatar.png') }}"
+                            <div class="rounded-circle border shadow-sm overflow-hidden flex-shrink-0" style="width: 50px; height: 50px;">
+                                <img id="photo-preview" src="{{ $user->photo_url ?? asset('img/default-avatar.svg') }}"
                                     alt="Photo de {{ $user->first_name }}"
                                     class="w-100 h-100"
                                     style="object-fit: cover;">
@@ -255,7 +255,7 @@
                             Annuler
                         </a>
                         @if(! $readonly)
-                        <button class="btn btn-success btn-sm px-4" type="submit">
+                        <button class="btn btn-success btn-sm px-4" type="submit" id="btn-submit">
                             Sauvegarder
                         </button>
                         @endif
@@ -263,7 +263,7 @@
 
                 </form>
 
-                <div class="mt-4 pt-2 border-top text-muted small">
+                <div class="text-muted small">
                     <x-created-updated-by :model="$user" />
                 </div>
 
@@ -311,39 +311,56 @@
     }
 
 
-    $(document).ready(function () {
-    const duplicateModal = new bootstrap.Modal('#duplicateModal');
+    $(document).ready(function() {
+        const duplicateModal = new bootstrap.Modal('#duplicateModal');
+        const $btnSubmit = $('#btn-submit');
+        const originalBtnText = $btnSubmit.html(); // Sauvegarde le texte d'origine "Sauvegarder"
 
-    $('form').on('submit', function (e) {
-        const $form = $(this);
-
-        // Si le formulaire est déjà en cours de soumission directe, on laisse passer
-        if ($form.data('checked')) return;
-
-        e.preventDefault();
-
-        const lastName = $('#last_name').val();
-        const firstName = $('#first_name').val();
-        const userId = "{{ $user->id ?? '' }}";
-
-        // Si les champs sont vides, on soumet directement
-        if (!lastName && !firstName) {
-            $form[0].submit();
-            return;
+        // Fonction pour activer / désactiver le loader
+        function toggleSubmitLoading(isLoading) {
+            if (isLoading) {
+                $btnSubmit.prop('disabled', true).html(`
+                <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                Vérification...
+            `);
+            } else {
+                $btnSubmit.prop('disabled', false).html(originalBtnText);
+            }
         }
 
-        // Appel AJAX jQuery
-        $.get("{{ route('users.check-duplicates') }}", {
-            last_name: lastName,
-            first_name: firstName,
-            ignore_id: userId
-        })
-        .done(function (duplicates) {
-            if (duplicates.data.length > 0) {
-                // Il y a des doublons : on remplit et affiche la modal
-                let htmlList = '';
-                $.each(duplicates.data, function (i, u) {
-                    htmlList += `
+        $('form').on('submit', function(e) {
+            const $form = $(this);
+
+            if ($form.data('checked')) return;
+
+            e.preventDefault();
+
+            // 1. On passe le bouton en état "chargement"
+            toggleSubmitLoading(true);
+
+            const lastName = $('#last_name').val();
+            const firstName = $('#first_name').val();
+            const userId = "{{ $user->id ?? '' }}";
+
+            if (!lastName && !firstName) {
+                $form[0].submit();
+                return;
+            }
+
+            // Appel AJAX
+            $.get("{{ route('users.check-duplicates') }}", {
+                    last_name: lastName,
+                    first_name: firstName,
+                    ignore_id: userId
+                })
+                .done(function(duplicates) {
+                    if (duplicates.data.length > 0) {
+                        // Il y a des doublons : on remet le bouton normal et on affiche la modal
+                        toggleSubmitLoading(false);
+
+                        let htmlList = '';
+                        $.each(duplicates.data, function(i, u) {
+                            htmlList += `
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <div>
                                 <strong>${u.last_name} ${u.first_name}</strong> 
@@ -352,27 +369,37 @@
                             <a href="/users/${u.id}" target="_blank" class="btn btn-xs btn-outline-primary py-0 px-1">Voir</a>
                         </li>
                     `;
-                });
+                        });
 
-                $('#duplicate-list').html(htmlList);
-                duplicateModal.show();
-            } else {
-                // 0 doublon : on marque comme vérifié et on soumet avec l'élément DOM natif [0]
-                console.log('0 doublon')
-                $form.data('checked', true);
-                $form[0].submit(); 
-            }
-        })
-        .fail(function () {
-            // En cas d'erreur de l'API, on ne bloque pas l'utilisateur
-            $form[0].submit();
+                        $('#duplicate-list').html(htmlList);
+                        duplicateModal.show();
+                    } else {
+                        // 0 doublon : On change juste le texte pendant que la page recharge/soumet
+                        $btnSubmit.html(`
+                    <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                    Enregistrement...
+                `);
+
+                        $form.data('checked', true);
+                        $form[0].submit();
+                    }
+                })
+                .fail(function() {
+                    // En cas d'erreur de l'API, on laisse le spinner et on tente la soumission
+                    $form[0].submit();
+                });
+        });
+
+        // Clic sur "Forcer l'enregistrement" dans la modal
+        $('#btn-force-submit').on('click', function() {
+            // Désactive le bouton de la modal pour éviter le double clic
+            $(this).prop('disabled', true).html(`
+            <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+            Enregistrement...
+        `);
+
+            $('form')[0].submit();
         });
     });
-
-    // Clic sur "Forcer l'enregistrement" dans la modal
-    $('#btn-force-submit').on('click', function () {
-        $('form')[0].submit();
-    });
-});
 </script>
 @endsection

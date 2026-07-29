@@ -33,8 +33,6 @@ class UserRepository
             return $q->where('status', $request['status']);
         });
 
-       
-
         return $query;
     }
 

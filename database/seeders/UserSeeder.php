@@ -55,7 +55,7 @@ class UserSeeder extends Seeder
             // some students
             $students = User::factory()->count(rand(1, 3))->create([
                 'last_name' => $lastName,
-                'role' => 'STUDENT'
+                'role' => 'STUDENT',
             ]);
 
             // the links between parents and students

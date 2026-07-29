@@ -4,7 +4,6 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Enums\UserCivility;
 use App\Enums\UserGender;
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
@@ -43,7 +42,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, HasUuids, Notifiable;
+    use HasCreatedUpdatedBy, HasFactory, HasUuids, Notifiable;
 
     /**
      * Get the attributes that should be cast.
@@ -58,21 +57,21 @@ class User extends Authenticatable
             'role' => UserRole::class,
             'gender' => UserGender::class,
             'status' => UserStatus::class,
-            'birth_date' => 'datetime:d/m/Y'
+            'birth_date' => 'datetime:d/m/Y',
         ];
     }
-    
+
     public function getInitialsAttribute(): string
     {
         $first = mb_substr($this->first_name ?? '', 0, 1);
-        $last  = mb_substr($this->last_name ?? '', 0, 1);
+        $last = mb_substr($this->last_name ?? '', 0, 1);
 
-        return strtoupper($first . $last);
+        return strtoupper($first.$last);
     }
 
     public function getFullNameAttribute(): string
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->first_name.' '.$this->last_name;
     }
 
     public function setFirstNameAttribute(string $value): void

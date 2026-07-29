@@ -78,7 +78,7 @@ class StoreUserRequest extends FormRequest
 
             'gender.enum' => 'Genre incorrect',
             'birth_date.date_format' => 'La date de naissance doit être au format jj/mm/aaaa',
-            'birth_date.before_today' => 'La date de naissancxe doit être dans le passé',
+            'birth_date.before' => 'La date de naissance doit être dans le passé',
 
             'address.max' => 'Adresse trop longue (255 caractères max)',
             'postal_code.max' => 'code postal trop long (5 caractères max)',

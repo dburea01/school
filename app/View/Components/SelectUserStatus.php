@@ -2,21 +2,20 @@
 
 namespace App\View\Components;
 
-use App\Models\UserStatus;
+use App\Enums\UserStatus;
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\Component;
 
 class SelectUserStatus extends Component
 {
-    /** @var Collection<int,UserStatus> */
+    /** @var array<int, UserStatus> $userStatuses */
     public $userStatuses;
 
     public function __construct(
         public string $value
     ) {
-        $this->userStatuses = UserStatus::orderBy('position')->get();
+        $this->userStatuses = UserStatus::cases();
     }
 
     /**

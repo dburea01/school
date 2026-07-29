@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Enums\UserCivility;
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use App\Models\User;
@@ -46,13 +45,13 @@ class UserFactory extends Factory
         $avatarUrls = [
             'https://plus.unsplash.com/premium_photo-1689551670902-19b441a6afde?q=80&w=50&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=50&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-            'https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?q=80&w=50&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+            'https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?q=80&w=50&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         ];
 
         return [
             'role' => fake()->randomElement(UserRole::cases()),
             'status' => fake()->randomElement(UserStatus::cases()),
-            
+
             'gender' => $gender,
             'first_name' => $firstName,
             'last_name' => $lastName,
