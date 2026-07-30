@@ -1,58 +1,152 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# A propos de SCHOOL
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+SCHOOL est un outil de gestion d'établissement scolaire, simple, destiné aux écoles ne pouvant pas investir dans un pronote ou autre système. SCHOOL est un logicial open source. Vous êtes libre de l'installer, l'utiliser à votre convenance. Et de la modifier également à votre convenance. Les sources sont sur [https://github.com/dburea01/school](https://github.com/dburea01/school).
 
-## About Laravel
+Une démonstration est disponible ici : [github](https://github.com/dburea01/school).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🤝 Contribution & Recherche de Product Owner (PO)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Je suis actuellement à la recherche d'un **Product Owner (PO) motivé** pour m'accompagner et me guider dans les prochaines étapes de développement du projet (définition de la roadmap, cadrage des fonctionnalités, rédaction des user stories, priorisation du backlog, testing...).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Si le projet vous intéresse et que vous souhaitez collaborer, n'hésitez pas à me contacter !
 
-## Learning Laravel
+## 📋 Prérequis
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Avant de commencer, vérifiez que votre environnement de développement dispose des outils suivants :
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* **Git**
+* **PHP** (>= 8.3)
+* **Composer** (Gestionnaire de dépendances PHP)
+* **Node.js** & **npm** (Gestionnaire de dépendances JS)
+* **SGBD / Base de données** : PostgreSQL (non testé sur d'autres SGBD)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+---
 
-## Agentic Development
+## 🛠️ Étapes d'installation
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### 1 : Cloner le projet Git
+
+Récupérez le dépôt distant et ouvrez le dossier du projet dans votre terminal :
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/dburea01/school.git
+cd nom-du-projet
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+### 2 : Installer les dépendances PHP
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Installez l'ensemble des paquets requis définis dans `composer.json` (le dossier `vendor/` étant exclu du suivi Git) :
 
-## Code of Conduct
+```bash
+composer install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+### 3 : Installer et compiler les dépendances Frontend
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Installez les dépendances JavaScript et démarrez le serveur de build (Vite / Mix) :
 
-## License
+```bash
+npm install
+npm run dev
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+### 4 : Dupliquer le fichier de configuration `.env`
+
+Créez votre propre fichier d'environnement local à partir du modèle fourni :
+
+```bash
+cp .env.example .env
+```
+
+---
+
+### 5 : Configurer la base de données
+
+Ouvrez le fichier `.env` avec votre éditeur de code et adaptez les paramètres d'accès à votre base de données :
+
+```env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=school
+DB_USERNAME=postgres
+DB_PASSWORD=your_password
+```
+
+> **Note :** Pensez à créer la base de données (`nom_de_votre_bdd`) dans votre gestionnaire de BDD (DBeaver par example) avant de passer à l'étape suivante.
+
+---
+
+### 6 : Générer la clé d'application
+
+Générez la clé d'encodage unique `APP_KEY` dans votre fichier `.env` :
+
+```bash
+php artisan key:generate
+```
+
+---
+
+### 7 : Exécuter les migrations et alimenter la BDD
+
+Créez les tables :
+
+```bash
+php artisan migrate
+```
+
+Vous pouvez également créer les tables et les alimenter avec un jeu de données fictif :
+
+```bash
+php artisan migrate --seed
+```
+
+---
+
+### 8 : Créer le lien symbolique pour le stockage
+
+Pour le stockage en local des images :
+
+```bash
+php artisan storage:link
+```
+
+---
+
+### 9 : Lancer le serveur de développement
+
+Démarrez le serveur local Laravel :
+
+```bash
+php artisan serve
+```
+
+L'application est désormais accessible à l'adresse suivante : **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
+
+---
+
+## 💡 Commandes utiles au quotidien
+
+* **Vider les caches (configuration, routes, vues) :**
+
+  ```bash
+  php artisan optimize:clear
+  ```
+
+* **Réinitialiser complètement la base de données avec les seeders :**
+
+  ```bash
+  php artisan migrate:fresh --seed
+  ```
+
+* **Lister toutes les routes de l'application :**
+
+  ```bash
+  php artisan route:list
+  ```
