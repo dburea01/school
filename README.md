@@ -1,6 +1,10 @@
 # A propos de SCHOOL
 
-SCHOOL est un outil de gestion d'établissement scolaire, simple, destiné aux écoles ne pouvant pas investir dans un pronote ou autre système. SCHOOL est un logicial open source. Vous êtes libre de l'installer, l'utiliser à votre convenance. Et de la modifier également à votre convenance. Les sources sont sur [https://github.com/dburea01/school](https://github.com/dburea01/school).
+SCHOOL est un outil de gestion d'établissement scolaire, simple, destiné aux écoles ne pouvant pas investir dans un des nombreux systèmes du marché.
+
+SCHOOL est un logicial open source. Vous êtes libre de l'installer, l'utiliser à votre convenance. Et de le modifier également à votre convenance. Les sources sont sur [https://github.com/dburea01/school](https://github.com/dburea01/school).
+
+SCHOOL est majoritairement destiné à la gestion d'une école dont les fonctionnalités se rapprochent d'une école française. SCHOOL est en français. 
 
 Une démonstration est disponible ici : [github](https://github.com/dburea01/school).
 
@@ -37,7 +41,7 @@ cd nom-du-projet
 
 ### 2 : Installer les dépendances PHP
 
-Installez l'ensemble des paquets requis définis dans `composer.json` (le dossier `vendor/` étant exclu du suivi Git) :
+Installez l'ensemble des paquets requis définis dans `composer.json` :
 
 ```bash
 composer install
@@ -74,7 +78,7 @@ Ouvrez le fichier `.env` avec votre éditeur de code et adaptez les paramètres 
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
 DB_PORT=5432
-DB_DATABASE=school
+DB_DATABASE=nom_de_votre_bdd
 DB_USERNAME=postgres
 DB_PASSWORD=your_password
 ```

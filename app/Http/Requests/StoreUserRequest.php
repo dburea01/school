@@ -9,6 +9,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class StoreUserRequest extends FormRequest
 {
@@ -57,6 +58,22 @@ class StoreUserRequest extends FormRequest
                 'mimes:png,jpg,jpeg,webp',
                 'max:2048',
             ],
+        ];
+    }
+
+    public function after(): array
+    {
+        return [
+            function (Validator $validator) {
+
+                $qtyUsers = User::count();
+                if ($qtyUsers >= config('params.max_users')) {
+                    $validator->errors()->add(
+                        'last_name',
+                        "Quantité maximale d'utilisateurs atteinte : ".config('params.max_users')
+                    );
+                }
+            },
         ];
     }
 
