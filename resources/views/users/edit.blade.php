@@ -115,9 +115,9 @@
                         </legend>
 
                         <div class="d-flex align-items-center gap-3">
-                            {{-- Conteneur carré rigide 100x100 avec masque circulaire --}}
+                            {{-- Conteneur circulaire 50x50 --}}
                             <div class="rounded-circle border shadow-sm overflow-hidden flex-shrink-0" style="width: 50px; height: 50px;">
-                                <img id="photo-preview" src="{{ $user->avatar_path ?  Storage::url($user->avatar_path) : asset('img/default-avatar.svg') }}"
+                                <img id="photo-preview" src="{{ $user->avatar_path ? Storage::url($user->avatar_path) : asset('img/default-avatar.svg') }}"
                                     alt="Photo de {{ $user->first_name }}"
                                     class="w-100 h-100"
                                     style="object-fit: cover;">
@@ -126,14 +126,29 @@
                             @if(! $readonly)
                             <div class="flex-grow-1" style="max-width: 400px;">
                                 <label for="photo" class="form-label small text-muted mb-1">Choisir une image</label>
-                                <input type="file"
-                                    id="photo"
-                                    name="photo"
-                                    accept="image/png, image/jpeg, image/webp"
-                                    class="form-control form-control-sm @error('photo') is-invalid @enderror"
-                                    onchange="previewPhoto(this)">
+
+                                <div class="input-group input-group-sm">
+                                    <input type="file"
+                                        id="photo"
+                                        name="photo"
+                                        accept="image/png, image/jpeg, image/webp"
+                                        class="form-control @error('photo') is-invalid @enderror"
+                                        onchange="previewPhoto(this)">
+
+                                    {{-- Bouton Supprimer (affiché si une photo existe déjà en BDD) --}}
+                                    <button type="button"
+                                        id="btn-remove-photo"
+                                        class="btn btn-outline-danger {{ $user->avatar_path ? '' : 'd-none' }}"
+                                        onclick="removePhoto()">
+                                        Supprimer
+                                    </button>
+                                </div>
+
+                                {{-- Champ caché pour indiquer au contrôleur qu'il faut supprimer la photo --}}
+                                <input type="hidden" name="remove_photo" id="remove_photo" value="0">
+
                                 @error('photo')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
                             @endif
@@ -302,12 +317,29 @@
 
 @section('extra_js')
 <script>
+const defaultAvatar = "{{ asset('img/default-avatar.svg') }}";
+
     function previewPhoto(input) {
         const [file] = input.files;
         if (file) {
-            const preview = document.getElementById('photo-preview');
-            preview.src = URL.createObjectURL(file);
+            // Remplace l'image par le fichier sélectionné
+            document.getElementById('photo-preview').src = URL.createObjectURL(file);
+            // Annule une éventuelle demande de suppression
+            document.getElementById('remove_photo').value = "0";
+            // Rend le bouton supprimer visible
+            document.getElementById('btn-remove-photo').classList.remove('d-none');
         }
+    }
+
+    function removePhoto() {
+        // 1. Remet l'avatar SVG par défaut
+        document.getElementById('photo-preview').src = defaultAvatar;
+        // 2. Réinitialise l'input file (si un fichier venait d'être choisi)
+        document.getElementById('photo').value = "";
+        // 3. Dit au serveur de vider avatar_path en BDD
+        document.getElementById('remove_photo').value = "1";
+        // 4. Masque le bouton supprimer
+        document.getElementById('btn-remove-photo').classList.add('d-none');
     }
 
 

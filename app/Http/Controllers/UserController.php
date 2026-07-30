@@ -141,6 +141,14 @@ class UserController extends Controller
                 $user->update($paths);
             }
 
+            if ($request->boolean('remove_photo')){
+                $this->userImageService->removePhoto($user);
+                $user->update([
+                    'avatar_path' => null,
+                    'photo_path' => null
+                ]);
+            }
+
             return redirect()->route('users.index')->with('success', "$user->full_name modifié");
         } catch (\Exception $e) {
             Log::error($e->getMessage());

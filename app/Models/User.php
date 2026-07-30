@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property UserStatus $status
@@ -84,6 +85,15 @@ class User extends Authenticatable
     public function setLastNameAttribute(string $value): void
     {
         $this->attributes['last_name'] = strtoupper($value);
+    }
+
+    public function getAvatarUrlAttribute(): string
+    {
+        if ($this->avatar_path && Storage::disk('public')->exists($this->avatar_path)) {
+            return Storage::url($this->avatar_path);
+        }
+
+        return asset('img/default-avatar.svg');
     }
 
     public function isAdmin(): bool

@@ -15,7 +15,7 @@ class UserImageService
         $photoPath = "users/{$user->id}/photo.webp";
 
         Image::fromUpload($file)
-            ->cover(150, 150)
+            ->cover(50, 50)
             ->toWebp()
             ->quality(80)
             ->storePubliclyAs(
@@ -25,7 +25,7 @@ class UserImageService
             );
 
         Image::fromUpload($file)
-            ->scale(width: 800)
+            ->scale(width: 400)
             ->toWebp()
             ->quality(85)
             ->storePubliclyAs(
@@ -45,5 +45,11 @@ class UserImageService
         Storage::disk('public')->deleteDirectory(
             "users/{$user->id}"
         );
+    }
+
+    public function removePhoto(User $user): void
+    {
+        Storage::disk('public')->delete("users/{$user->id}/avatar.webp");
+        Storage::disk('public')->delete("users/{$user->id}/photo.webp");
     }
 }
