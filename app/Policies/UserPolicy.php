@@ -11,9 +11,10 @@ class UserPolicy
         return $userConnected->isAdmin() || $userConnected->isDirector() || $userConnected->isTeacher();
     }
 
-    public function view(User $user): bool
+    public function view(User $userConnected, User $user): bool
     {
-        return false;
+        return $userConnected->isAdmin() || $userConnected->isDirector() || $userConnected->isTeacher()
+        || $userConnected->id == $user->id;
     }
 
     public function create(User $userConnected): bool

@@ -9,7 +9,7 @@ use Illuminate\View\Component;
 
 class SelectUserStatus extends Component
 {
-    /** @var array<int, UserStatus> $userStatuses */
+    /** @var array<int, UserStatus> */
     public $userStatuses;
 
     public function __construct(

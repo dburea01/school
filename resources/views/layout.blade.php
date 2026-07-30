@@ -44,20 +44,17 @@
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
             </div>
 
-            <a href="{{ route('home') }}" class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2">
-                @if(request()->routeIs('home'))
-                <strong><i class="bi bi-house me-2"></i>Accueil</strong>
-                @else
-                <i class="bi bi-house me-2"></i>Accueil
-                @endif
+            <a href="{{ route('home') }}"
+                class="nav-link d-flex align-items-center rounded-3 px-1 py-2 {{ request()->routeIs('home') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
+                <i class="bi bi-house me-3 fs-5"></i>
+                <span>Accueil</span>
             </a>
+
             @guest
-            <a href="{{ route('login') }}" class="list-group-item list-group-item-action custom-sidebar text-dark border-0 py-2">
-                @if(request()->routeIs('login'))
-                <strong><i class="bi bi-box-arrow-in-left me-2"></i>Connexion</strong>
-                @else
-                <i class="bi bi-box-arrow-in-left me-2"></i>Connexion
-                @endif
+            <a href="{{ route('login') }}"
+                class="nav-link d-flex align-items-center rounded-3 px-1 py-2 {{ request()->routeIs('login') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
+                <i class="bi bi-box-arrow-in-left me-3 fs-5"></i>
+                <span>Connexion</span>
             </a>
             @endguest
 

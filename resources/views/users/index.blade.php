@@ -105,18 +105,7 @@
                                 <td class="align-middle">
                                     <div class="d-flex align-items-center gap-3">
 
-                                        {{-- AVATAR or INITIALES --}}
-                                        @if ($user->avatar_path)
-                                        <img src="{{ Storage::url($user->avatar_path) }}"
-                                            alt="{{ $user->name }}"
-                                            class="rounded-circle object-fit-cover flex-shrink-0"
-                                            width="44"
-                                            height="44">
-                                        @else
-                                        <div class="avatar-initials bg-secondary-subtle text-secondary-emphasis">
-                                            {{ $user->initials }}
-                                        </div>
-                                        @endif
+                                        <x-avatar :user="$user" dimension="44" />
 
                                         {{-- NOM + EMAIL --}}
                                         <div class="lh-sm min-w-0">

@@ -115,13 +115,8 @@
                         </legend>
 
                         <div class="d-flex align-items-center gap-3">
-                            {{-- Conteneur circulaire 50x50 --}}
-                            <div class="rounded-circle border shadow-sm overflow-hidden flex-shrink-0" style="width: 50px; height: 50px;">
-                                <img id="photo-preview" src="{{ $user->avatar_path ? Storage::url($user->avatar_path) : asset('img/default-avatar.svg') }}"
-                                    alt="Photo de {{ $user->first_name }}"
-                                    class="w-100 h-100"
-                                    style="object-fit: cover;">
-                            </div>
+
+                            <x-avatar :user="$user" dimension="50" id="photo-preview" />
 
                             @if(! $readonly)
                             <div class="flex-grow-1" style="max-width: 400px;">
@@ -140,7 +135,7 @@
                                         id="btn-remove-photo"
                                         class="btn btn-outline-danger {{ $user->avatar_path ? '' : 'd-none' }}"
                                         onclick="removePhoto()">
-                                        Supprimer
+                                        Supprimer photo
                                     </button>
                                 </div>
 
@@ -238,7 +233,7 @@
                                 <input type="tel"
                                     id="phone_number"
                                     name="phone_number"
-                                    max="25"
+
                                     @readonly($readonly)
                                     class="form-control form-control-sm @error('phone_number') is-invalid @enderror"
                                     value="{{ old('phone_number', $user->phone_number) }}">
@@ -292,9 +287,9 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-warning-subtle">
-                <h5 class="modal-title fw-bold text-warning-emphasis">
+                <p class="modal-title fw-bold text-warning-emphasis">
                     <i class="bi bi-exclamation-triangle-fill me-2"></i>Doublon potentiel détecté
-                </h5>
+                </p>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-content-body p-3">
@@ -317,7 +312,7 @@
 
 @section('extra_js')
 <script>
-const defaultAvatar = "{{ asset('img/default-avatar.svg') }}";
+    const defaultAvatar = "{{ asset('img/default-avatar.svg') }}";
 
     function previewPhoto(input) {
         const [file] = input.files;

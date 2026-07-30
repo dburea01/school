@@ -50,14 +50,12 @@ class StoreUserRequest extends FormRequest
             'address' => 'nullable|max:255',
             'postal_code' => 'nullable|max:5',
             'city' => 'nullable|max:50',
-            // 'country' => 'required|size:2',
             'comment' => 'nullable|max:255',
             'photo' => [
                 'nullable',
                 'image',
                 'mimes:png,jpg,jpeg,webp',
-                'max:2048', // Taille maximale en Ko (2048 Ko = 2 Mo)
-                // 'dimensions:min_width=200,min_height=200'
+                'max:2048',
             ],
         ];
     }

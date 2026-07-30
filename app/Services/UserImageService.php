@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Storage;
 
 class UserImageService
 {
-    public function store(User $user, UploadedFile $file): array
+    /** @return array<string> */
+    public function storeImage(User $user, UploadedFile $file): array
     {
         $avatarPath = "users/{$user->id}/avatar.webp";
         $photoPath = "users/{$user->id}/photo.webp";
@@ -40,7 +41,7 @@ class UserImageService
         ];
     }
 
-    public function delete(User $user): void
+    public function deleteDirectory(User $user): void
     {
         Storage::disk('public')->deleteDirectory(
             "users/{$user->id}"
