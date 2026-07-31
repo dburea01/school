@@ -13,7 +13,8 @@
         "fakerphp/faker": "^1.24",
         "intervention/image": "^4.0",
         "laravel/framework": "^13.8",
-        "laravel/tinker": "^3.0"
+        "laravel/tinker": "^3.0",
+        "league/flysystem-aws-s3-v3": "^3.35"
     },
     "require-dev": {
         "fruitcake/laravel-debugbar": "^4.4",
