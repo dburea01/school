@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
         ]);
 
         // some families
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $lastName = fake('fr_FR')->lastName();
 
             // 1 father and 1 mother

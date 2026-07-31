@@ -55,7 +55,7 @@ class UserFactory extends Factory
             'gender' => $gender,
             'first_name' => $firstName,
             'last_name' => $lastName,
-            'birth_date' => fake()->date(),
+            'birth_date' => fake()->date('d/m/Y'),
             'email' => function (array $attributes) {
                 return strtolower($attributes['first_name'])
                     .'.'
