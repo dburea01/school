@@ -97,6 +97,11 @@ class User extends Authenticatable
         $this->attributes['last_name'] = strtoupper($value);
     }
 
+    public function setCityAttribute(string $value): void
+    {
+        $this->attributes['city'] = strtoupper($value);
+    }
+
     public function getAvatarUrlAttribute(): string
     {
         if ($this->avatar_path && Storage::disk('public')->exists($this->avatar_path)) {

@@ -177,6 +177,8 @@ class UserController extends Controller
     {
         /** @var string $lastName */
         $lastName = $request->last_name;
+        /** @var string $postalCode */
+        $postalCode = $request->postal_code;
         /** @var string $firstName */
         $firstName = $request->first_name;
         /** @var string $ignoreId */
@@ -185,7 +187,7 @@ class UserController extends Controller
         abort_if(Str::of($lastName)->trim()->isEmpty(), 400, 'Nom est vide');
         $this->authorize('viewAny', User::class);
 
-        $duplicatedUsers = $this->userRepository->getDuplicatedUsers($ignoreId, $lastName, $firstName);
+        $duplicatedUsers = $this->userRepository->getDuplicatedUsers($postalCode, $lastName, $firstName, $ignoreId);
 
         return UserResource::collection($duplicatedUsers);
     }

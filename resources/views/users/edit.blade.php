@@ -365,6 +365,7 @@
             // 1. On passe le bouton en état "chargement"
             toggleSubmitLoading(true);
 
+            const postalCode = $('#postal_code').val();
             const lastName = $('#last_name').val();
             const firstName = $('#first_name').val();
             const userId = "{{ $user->id ?? '' }}";
@@ -376,6 +377,7 @@
 
             // Appel AJAX
             $.get("{{ route('users.check-duplicates') }}", {
+                    postal_code: postalCode,
                     last_name: lastName,
                     first_name: firstName,
                     ignore_id: userId
@@ -391,7 +393,7 @@
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <div>
                                 <strong>${u.last_name} ${u.first_name}</strong> 
-                                <span class="text-muted">(${u.city ?? 'Ville N/C'})</span>
+                                <span class="text-muted">(Commune : ${u.postal_code} - ${u.city})</span>
                             </div>
                             <a href="/users/${u.id}" target="_blank" class="btn btn-xs btn-outline-primary py-0 px-1">Voir</a>
                         </li>

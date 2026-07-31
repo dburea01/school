@@ -4,11 +4,13 @@ namespace App\Http\Requests;
 
 use App\Enums\UserGender;
 use App\Enums\UserRole;
+use App\Enums\UserStatus;
 use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\RequiredIf;
 use Illuminate\Validation\Validator;
 
 class StoreUserRequest extends FormRequest
@@ -34,22 +36,33 @@ class StoreUserRequest extends FormRequest
      *
      * @return array<string, ValidationRule|array<mixed>|string>
      */
-    public function rules(Request $request): array
+    public function rules(): array
     {
+
         return [
             'first_name' => 'required|max:50',
             'last_name' => 'required|max:100',
             'role' => ['required', Rule::enum(UserRole::class)],
             'email' => [
                 'nullable',
+                Rule::requiredIf(in_array($this->role, [
+                    UserRole::TEACHER->value,
+                    UserRole::DIRECTOR->value,
+                    UserRole::ADMIN->value,
+                    UserRole::PARENT->value,
+                ])),
                 Rule::unique('users')
                     ->ignore($this->user),
             ],
             'gender' => ['nullable', Rule::enum(UserGender::class)],
-            'birth_date' => ['nullable', Rule::date()->format('d/m/Y')->beforeToday()],
+            'birth_date' => [
+                'nullable',
+                Rule::requiredIf($this->role == UserRole::STUDENT->value),
+                Rule::date()->format('d/m/Y')->beforeToday()
+            ],
             'phone_number' => 'nullable|max:25',
             'address' => 'nullable|max:255',
-            'postal_code' => 'nullable|max:5',
+            'postal_code' => 'nullable|size:5',
             'city' => 'nullable|max:50',
             'comment' => 'nullable|max:255',
             'photo' => [
@@ -99,14 +112,16 @@ class StoreUserRequest extends FormRequest
 
             'email.email' => 'Email non valide',
             'email.unique' => 'Email déjà utilisé',
-            // 'email.required' => 'Adresse email obligatoire pour autoriser les accés à cet utilisateur.',
+            'email.required' => 'Adresse email obligatoire',
 
             'gender.enum' => 'Genre incorrect',
+
+            'birth_date.required' => 'Date de naissance obligatoire pour un élève',
             'birth_date.date_format' => 'La date de naissance doit être au format jj/mm/aaaa',
             'birth_date.before' => 'La date de naissance doit être dans le passé',
 
             'address.max' => 'Adresse trop longue (255 caractères max)',
-            'postal_code.max' => 'code postal trop long (5 caractères max)',
+            'postal_code.size' => 'code postal doit avoir 5 caractères',
             'city.max' => 'Commune trop longue (50 caractères max)',
             'country.size' => '2 caractères pour la code pays',
 
