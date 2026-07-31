@@ -35,8 +35,13 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        // On partage la variable $currentOrganization avec TOUTES les vues Blade de l'appli
+        // On partage la variable $school avec TOUTES les vues Blade de l'appli
         // On utilise une fonction anonyme pour que la requête SQL ne soit exécutée que si une vue est affichée
-        View::share('school', School::first());
+        // View::share('school', School::first());
+        try {
+            View::share('school', School::first());
+        } catch (\Throwable $e) {
+            View::share('school', null);
+        }
     }
 }
