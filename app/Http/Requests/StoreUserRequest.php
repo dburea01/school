@@ -61,6 +61,9 @@ class StoreUserRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return array<int, callable(Validator): void>
+     */
     public function after(): array
     {
         return [
@@ -70,7 +73,7 @@ class StoreUserRequest extends FormRequest
                 if ($qtyUsers >= config('params.max_users')) {
                     $validator->errors()->add(
                         'last_name',
-                        "Quantité maximale d'utilisateurs atteinte : ".config('params.max_users')
+                        "Quantité maximale d'utilisateurs atteinte : " . config('params.max_users')
                     );
                 }
             },

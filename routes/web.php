@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContactAuthorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\UserController;
@@ -45,4 +46,12 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class)->whereUuid('user');
     Route::get('users/check-duplicates', [UserController::class, 'checkDuplicates'])->name('users.check-duplicates');
 
+});
+
+
+Route::get('contact-the-author', [ContactAuthorController::class, 'show'])->name('contact-the-author');
+Route::post('contact-the-author', [ContactAuthorController::class, 'submit'])->name('contact-the-author')->middleware('throttle:emails-contact');
+
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
 });

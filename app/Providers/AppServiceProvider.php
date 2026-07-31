@@ -3,8 +3,11 @@
 namespace App\Providers;
 
 use App\Models\School;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -36,12 +39,17 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // On partage la variable $school avec TOUTES les vues Blade de l'appli
-        // On utilise une fonction anonyme pour que la requête SQL ne soit exécutée que si une vue est affichée
-        // View::share('school', School::first());
         try {
             View::share('school', School::first());
         } catch (\Throwable $e) {
             View::share('school', null);
         }
+
+        RateLimiter::for('emails-contact', function (Request $request) {
+            /** @var int $maxContactAuthorEmails */
+            $maxContactAuthorEmails = config('params.max-contact-author-emails');
+
+            return Limit::perDay($maxContactAuthorEmails)->by($request->user()?->id ?: $request->ip());
+        });
     }
 }
