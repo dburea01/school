@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserRole;
+use App\Enums\UserStatus;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -59,6 +60,7 @@ class UserController extends Controller
 
         $user = new User;
         $user->role = UserRole::STUDENT;
+        $user->status = UserStatus::ACTIVE;
         $user->country_id = 'FR';
 
         return view('users.edit', [

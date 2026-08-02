@@ -25,10 +25,10 @@
                     @method('PUT')
                     @endif
 
-                    <!-- SECTION 1 : IDENTITÉ & RÔLE -->
+                    {{-- SECTION RÔLE & STATUS --}}
                     <fieldset class="mb-3">
                         <legend class="h6 fw-bold text-primary border-bottom pb-1 mb-1">
-                            Identité & Rôle
+                            Rôle et status
                         </legend>
 
                         <div class="row g-1">
@@ -45,8 +45,51 @@
                                 @enderror
                             </div>
 
+                            {{-- status --}}
+                            <div class="col-md-7">
+                                <label class="form-label fw-bold">Statut du compte *</label>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach (App\Enums\UserStatus::cases() as $status)
+                                    <input type="radio"
+                                        class="btn-check"
+                                        name="status"
+                                        id="status_{{ $status->value }}"
+                                        value="{{ $status->value }}"
+                                        @checked(old('status', $user->status ?? App\Enums\UserStatus::ACTIVE) === $status)>
+
+                                    <label class="btn btn-outline-{{ $status->color() }} btn-sm d-flex align-items-center justify-content-center gap-2"
+                                        for="status_{{ $status->value }}"
+                                        title="{{ $status->description() }}"
+                                        style="min-width: 110px;"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top">
+                                        @if ($status->icon())
+                                        <i class="bi {{ $status->icon() }}"></i>
+                                        @else
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        @endif
+                                        <span>{{ $status->label() }}</span>
+                                    </label>
+                                    @endforeach
+                                </div>
+                                @error('status')
+                                <div class="text-danger small mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </fieldset>
+
+
+                    {{-- SECTION IDENTITÉ --}}
+                    <fieldset class="mb-3">
+                        <legend class="h6 fw-bold text-primary border-bottom pb-1 mb-1">
+                            Identité
+                        </legend>
+
+                        <div class="row g-1">
+
                             {{-- last name --}}
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="last_name" class="form-label">Nom *</label>
                                 <input type="text"
                                     id="last_name"
@@ -62,7 +105,7 @@
                             </div>
 
                             {{-- first name --}}
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="first_name" class="form-label">Prénom *</label>
                                 <input type="text"
                                     id="first_name"
@@ -78,7 +121,7 @@
                             </div>
 
                             {{-- gender --}}
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <label for="gender" class="form-label">Genre</label>
                                 <x-select-user-gender name="gender"
                                     id="gender"
@@ -91,7 +134,7 @@
                             </div>
 
                             {{-- birth_date --}}
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <label for="birth_date" class="form-label">Date naissance</label>
                                 <input type="text"
                                     id="birth_date"
@@ -108,7 +151,7 @@
                         </div>
                     </fieldset>
 
-                    {{-- the photo --}}
+                    {{-- SECTION PHOTO --}}
                     <fieldset class="mb-3">
                         <legend class="h6 fw-bold text-primary border-bottom pb-1 mb-2">
                             Photo
@@ -150,7 +193,7 @@
                         </div>
                     </fieldset>
 
-                    <!-- SECTION 3 : ADRESSE POSTALE -->
+                    {{-- SECTION ADRESSE POSTALE --}}
                     <fieldset class="mb-3">
                         <legend class="h6 fw-bold text-primary border-bottom pb-1 mb-1">
                             Adresse postale
@@ -206,7 +249,7 @@
                         </div>
                     </fieldset>
 
-                    <!-- SECTION 4 : CONTACT & REMARQUES -->
+                    {{-- SECTION CONTACT & REMARQUES --}}
                     <fieldset class="mb-3">
                         <legend class="h6 fw-bold text-primary border-bottom pb-1 mb-1">
                             Contact & Remarques

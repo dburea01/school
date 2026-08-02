@@ -22,7 +22,7 @@ enum UserStatus: string
         return match ($this) {
             self::ACTIVE => 'La personne peut se connecter.',
             self::BLOCKED => 'La personne ne peut pas se connecter. La personne est sélectionnable pour affectation.',
-            self::ARCHIVED => 'La personne ne peut pas se connecter. La personne n\'est pas séléctionnable pour affectation.',
+            self::ARCHIVED => 'La personne ne peut pas se connecter. La personne n\'est pas sélectionnable pour affectation.',
         };
     }
 
@@ -39,8 +39,8 @@ enum UserStatus: string
     {
         return match ($this) {
             self::ACTIVE => null, // Pas d'icône pour les actifs
-            self::BLOCKED => 'bi-slash-circle-fill',
-            self::ARCHIVED => 'bi-pause-fill',
+            self::BLOCKED => 'bi-ban',
+            self::ARCHIVED => 'bi-clock-history',
         };
     }
 }

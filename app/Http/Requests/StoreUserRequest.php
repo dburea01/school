@@ -43,6 +43,7 @@ class StoreUserRequest extends FormRequest
             'first_name' => 'required|max:50',
             'last_name' => 'required|max:100',
             'role' => ['required', Rule::enum(UserRole::class)],
+            'status' => ['required', Rule::enum(UserStatus::class)],
             'email' => [
                 'nullable',
                 Rule::requiredIf(in_array($this->role, [
@@ -109,6 +110,9 @@ class StoreUserRequest extends FormRequest
 
             'role.required' => 'Rôle obligatoire',
             'role.enum' => 'Rôle inconnu',
+
+            'status.required' => 'Status obligatoire',
+            'status.enum' => 'Status inconnu',
 
             'email.email' => 'Email non valide',
             'email.unique' => 'Email déjà utilisé',

@@ -17,7 +17,7 @@
         style="
                 width: {{ round($dimension * 0.4) }}px; 
                 height: {{ round($dimension * 0.4) }}px; 
-                font-size: {{ round($dimension * 0.22) }}px; 
+                font-size: {{ round($dimension * 0.25) }}px; 
                 transform: translate(10%, 10%);
               ">
         <i class="bi {{ $user->status->icon() }}"></i>
