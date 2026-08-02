@@ -42,7 +42,7 @@
                 <form action="{{ route('users.index') }}">
 
                     {{-- search --}}
-                    <div class="mb-3">
+                    <div class="mb-1">
                         <input type="text"
                             class="form-control form-control-sm"
                             name="search"
@@ -51,11 +51,19 @@
                     </div>
 
                     {{-- role --}}
-                    <div class="mb-3">
+                    <div class="mb-1">
                         <x-select-user-role name="role"
                             id="role"
                             class="form-select form-select-sm"
                             :value="$role" />
+                    </div>
+
+                    {{-- status --}}
+                    <div class="mb-1">
+                        <x-select-user-status name="status"
+                            id="status"
+                            class="form-select form-select-sm"
+                            :value="$status" />
                     </div>
 
                     {{-- submit --}}

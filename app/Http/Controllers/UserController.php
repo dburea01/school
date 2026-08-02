@@ -46,6 +46,7 @@ class UserController extends Controller
             'total_users' => $totalUsers,
             'search' => $request->query('search', ''),
             'role' => $request->query('role', ''),
+            'status' => $request->query('status', '')
         ]);
     }
 
