@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactAuthorController;
 use App\Http\Controllers\HomeController;
@@ -46,6 +47,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class)->whereUuid('user');
     Route::get('users/check-duplicates', [UserController::class, 'checkDuplicates'])->name('users.check-duplicates');
 
+    Route::resource('academic-years', AcademicYearController::class)->whereUuid('academic_year');
+    // Route::resource('academic-years.academic-periods', AcademicPeriodController::class)->whereUuid(['academic_year', 'academic_period']);
 });
 
 

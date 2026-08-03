@@ -16,7 +16,7 @@
         </div>
 
         <div class="d-flex gap-2">
-            @can('create', App\Mdels\User::class)
+            @can('create', App\Models\User::class)
             <a href="{{ route('users.create') }}"
                 class="btn btn-primary btn-sm">
                 + Créer
