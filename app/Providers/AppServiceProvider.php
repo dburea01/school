@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Enums\AcademicYearStatus;
+use App\Models\AcademicYear;
 use App\Models\School;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -43,6 +45,12 @@ class AppServiceProvider extends ServiceProvider
             View::share('school', School::first());
         } catch (\Throwable $e) {
             View::share('school', null);
+        }
+
+        try {
+            View::share('currentAcademicYear', AcademicYear::where('status', AcademicYearStatus::CURRENT)->first());
+        } catch (\Throwable $e) {
+            View::share('currentAcademicYear', null);
         }
 
         RateLimiter::for('emails-contact', function (Request $request) {

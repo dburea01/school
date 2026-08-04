@@ -51,7 +51,6 @@ Route::middleware(['auth'])->group(function () {
     // Route::resource('academic-years.academic-periods', AcademicPeriodController::class)->whereUuid(['academic_year', 'academic_period']);
 });
 
-
 Route::get('contact-the-author', [ContactAuthorController::class, 'show'])->name('contact-the-author');
 Route::post('contact-the-author', [ContactAuthorController::class, 'submit'])->name('contact-the-author')->middleware('throttle:emails-contact');
 

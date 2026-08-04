@@ -4,10 +4,20 @@ namespace App\Models;
 
 use App\Enums\AcademicYearStatus;
 use Carbon\Carbon;
+use Database\Factories\AcademicYearFactory;
+use DomainException;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+
+/**
+ * @property string $id
+ * @property string $name
+ * @property AcademicYearStatus $status  <-- Informe Larastan du type Enum
+ */
 
 #[Fillable([
     'name',
@@ -20,11 +30,23 @@ use Illuminate\Database\Eloquent\Model;
 ])]
 class AcademicYear extends Model
 {
-
     use HasCreatedUpdatedBy, HasUuids;
 
-    /** @use HasFactory<\Database\Factories\AcademicYearFactory> */
+    /** @use HasFactory<AcademicYearFactory> */
     use HasFactory;
+
+    use SoftDeletes;
+
+    protected static function booted(): void
+    {
+        // Ce hook est exécuté AUTOMATIQUEMENT avant CHAQUE suppression
+        static::deleting(function (AcademicYear $academicYear) {
+            if ($academicYear->status !== AcademicYearStatus::DRAFT) {
+                // On empêche la suppression en levant une exception
+                throw new DomainException("Seule une année scolaire au statut 'Brouillon' peut être supprimée.");
+            }
+        });
+    }
 
     /**
      * Get the attributes that should be cast.

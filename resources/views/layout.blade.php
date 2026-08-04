@@ -29,7 +29,7 @@
             </button>
 
             <span class="navbar-brand mb-0">{{ $school?->name }}</span>
-            <span class="navbar-brand mb-0">Année scolaire 2026/2027</span>
+            <span class="navbar-brand mb-0">{{ $currentAcademicYear?->name }}</span>
         </div>
     </nav>
 
@@ -40,7 +40,7 @@
         <div class="offcanvas-lg offcanvas-start custom-sidebar text-dark h-100 d-flex flex-column p-2" tabindex="-1" id="sidebarMenu" style="min-width: 170px; max-width: 170px;">
 
             <div class="offcanvas-header border-bottom d-lg-none">
-                <h5 class="offcanvas-title fw-bold" style="color: var(--nav-bg);" id="sidebarMenuLabel">Menu</h5>
+                <h5 class="offcanvas-title" style="color: var(--nav-bg);" id="sidebarMenuLabel">{{ $school?->name }} {{ $currentAcademicYear?->name }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
             </div>
 

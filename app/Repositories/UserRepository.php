@@ -19,9 +19,9 @@ class UserRepository
 
         $query->when(isset($request['search']), function ($q) use ($request) {
             return $q->where(function (Builder $q2) use ($request) {
-                $q2->where('first_name', 'ilike', '%' . $request['search'] . '%')
-                    ->orWhere('last_name', 'ilike', '%' . $request['search'] . '%')
-                    ->orWhere('email', 'ilike', '%' . $request['search'] . '%');
+                $q2->where('first_name', 'ilike', '%'.$request['search'].'%')
+                    ->orWhere('last_name', 'ilike', '%'.$request['search'].'%')
+                    ->orWhere('email', 'ilike', '%'.$request['search'].'%');
             });
         });
 
@@ -48,12 +48,12 @@ class UserRepository
     /**
      * @return Collection<int,User>
      */
-    public function getDuplicatedUsers(?string $postalCode, string $lastName, ?string $firstName, ?string $ignoreId,)
+    public function getDuplicatedUsers(?string $postalCode, string $lastName, ?string $firstName, ?string $ignoreId)
     {
         $query = User::orderBy('last_name');
 
         // 1. Filter on the postal code (if known)
-        $query->when(!empty($postalCode), function ($q) use ($postalCode) {
+        $query->when(! empty($postalCode), function ($q) use ($postalCode) {
             $q->where('postal_code', $postalCode);
         });
 
@@ -62,22 +62,22 @@ class UserRepository
 
             // Case : last_name in last_name AND firt_name in first_name
             $subQuery->where(function ($q) use ($lastName, $firstName) {
-                $q->where('last_name', 'ilike', '%' . $lastName . '%');
-                if (!empty($firstName)) {
-                    $q->where('first_name', 'ilike', '%' . $firstName . '%');
+                $q->where('last_name', 'ilike', '%'.$lastName.'%');
+                if (! empty($firstName)) {
+                    $q->where('first_name', 'ilike', '%'.$firstName.'%');
                 }
             })
                 // Cas : vice versa
                 ->orWhere(function ($q) use ($lastName, $firstName) {
-                    $q->where('first_name', 'ilike', '%' . $lastName . '%');
-                    if (!empty($firstName)) {
-                        $q->where('last_name', 'ilike', '%' . $firstName . '%');
+                    $q->where('first_name', 'ilike', '%'.$lastName.'%');
+                    if (! empty($firstName)) {
+                        $q->where('last_name', 'ilike', '%'.$firstName.'%');
                     }
                 });
         });
 
         // 3. exclude the current id for the modification case
-        $query->when(!empty($ignoreId), function ($q) use ($ignoreId) {
+        $query->when(! empty($ignoreId), function ($q) use ($ignoreId) {
             $q->where('id', '<>', $ignoreId);
         });
 

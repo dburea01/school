@@ -10,7 +10,6 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\RequiredIf;
 use Illuminate\Validation\Validator;
 
 class StoreUserRequest extends FormRequest
@@ -59,7 +58,7 @@ class StoreUserRequest extends FormRequest
             'birth_date' => [
                 'nullable',
                 Rule::requiredIf($this->role == UserRole::STUDENT->value),
-                Rule::date()->format('d/m/Y')->beforeToday()
+                Rule::date()->format('d/m/Y')->beforeToday(),
             ],
             'phone_number' => 'nullable|max:25',
             'address' => 'nullable|max:255',
@@ -87,7 +86,7 @@ class StoreUserRequest extends FormRequest
                 if ($qtyUsers >= config('params.max_users')) {
                     $validator->errors()->add(
                         'last_name',
-                        "Quantité maximale d'utilisateurs atteinte : " . config('params.max_users')
+                        "Quantité maximale d'utilisateurs atteinte : ".config('params.max_users')
                     );
                 }
             },

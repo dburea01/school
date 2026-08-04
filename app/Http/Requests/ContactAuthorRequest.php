@@ -42,7 +42,7 @@ class ContactAuthorRequest extends FormRequest
             'email.email' => 'Adresse email non valide',
             'message.required' => 'Message obligatoire',
             'message.min' => 'Message trop court',
-            'message.max' => 'Message trop long'
+            'message.max' => 'Message trop long',
         ];
     }
 }
