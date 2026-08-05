@@ -21,7 +21,7 @@ class AcademicYearController extends Controller
     {
         $this->authorize('viewAny', AcademicYear::class);
 
-        $academicYears = AcademicYear::orderBy('start_date', 'desc')->get();
+        $academicYears = AcademicYear::with('periods')->orderBy('start_date', 'desc')->get();
 
         return view('academic-years.index', [
             'academicYears' => $academicYears,

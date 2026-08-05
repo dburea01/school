@@ -24,9 +24,7 @@ class UserPolicy
 
     public function update(User $userConnected, User $user): bool
     {
-        return $userConnected->isAdmin() || $userConnected->isDirector()
-            ||
-            ($userConnected->id == $user->id);
+        return $userConnected->isAdmin() || $userConnected->isDirector();
     }
 
     public function delete(User $userConnected, User $user): bool

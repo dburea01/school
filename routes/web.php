@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PeriodController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('the-author', function () {
@@ -48,7 +49,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('users/check-duplicates', [UserController::class, 'checkDuplicates'])->name('users.check-duplicates');
 
     Route::resource('academic-years', AcademicYearController::class)->whereUuid('academic_year');
-    // Route::resource('academic-years.academic-periods', AcademicPeriodController::class)->whereUuid(['academic_year', 'academic_period']);
+    Route::resource('academic-years.periods', PeriodController::class)->whereUuid(['academic_year', 'period'])->except('index');
 });
 
 Route::get('contact-the-author', [ContactAuthorController::class, 'show'])->name('contact-the-author');

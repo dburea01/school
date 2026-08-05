@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
@@ -76,5 +77,11 @@ class AcademicYear extends Model
             ? null
             // @phpstan-ignore-next-line
             : Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+    }
+
+    /** @return HasMany<Period, $this> */
+    public function periods(): HasMany
+    {
+        return $this->hasMany(Period::class);
     }
 }

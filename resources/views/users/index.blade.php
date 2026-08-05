@@ -117,9 +117,15 @@
 
                                         {{-- NOM + EMAIL --}}
                                         <div class="lh-sm min-w-0">
+                                            @can('edit', $user)
                                             <a href="{{ route('users.edit', $user) }}" class="fw-bold text-primary text-decoration-none d-block text-truncate">
                                                 {{ $user->full_name }}
                                             </a>
+                                            @else
+                                            <span class="fw-bold text-dark d-block text-truncate">
+                                                {{ $user->full_name }}
+                                            </span>
+                                            @endcan
                                             <small class="text-muted text-truncate d-block">
                                                 {{ $user->email }}
                                             </small>

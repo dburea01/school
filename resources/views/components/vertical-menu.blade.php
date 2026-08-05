@@ -8,6 +8,14 @@
 </a>
 @endcan
 
+@can('viewAny', App\Models\AcedemicYear::class)
+<a href="{{ route('academic-years.index') }}"
+    class="nav-link d-flex align-items-center rounded-3 px-1 py-2 {{ request()->routeIs('academic-users.index') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
+    <i class="bi bi-people me-3 fs-5"></i>
+    <span>Années scolaires</span>
+</a>
+@endcan
+
 @can('viewAny', App\Models\User::class)
 <a href="{{ route('users.index') }}"
     class="nav-link d-flex align-items-center rounded-3 px-1 py-2 {{ request()->routeIs('users.index') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
