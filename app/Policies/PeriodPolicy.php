@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Period;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class PeriodPolicy
 {
@@ -13,7 +12,7 @@ class PeriodPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->isAdmin() || $user->isDirector();
     }
 
     /**
@@ -21,7 +20,7 @@ class PeriodPolicy
      */
     public function view(User $user, Period $period): bool
     {
-        return false;
+        return $user->isAdmin() || $user->isDirector();
     }
 
     /**
@@ -29,7 +28,7 @@ class PeriodPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->isAdmin() || $user->isDirector();
     }
 
     /**
@@ -37,7 +36,7 @@ class PeriodPolicy
      */
     public function update(User $user, Period $period): bool
     {
-        return false;
+        return $user->isAdmin() || $user->isDirector();
     }
 
     /**
@@ -45,22 +44,6 @@ class PeriodPolicy
      */
     public function delete(User $user, Period $period): bool
     {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Period $period): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Period $period): bool
-    {
-        return false;
+        return $user->isAdmin() || $user->isDirector();
     }
 }

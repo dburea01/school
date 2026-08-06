@@ -7,7 +7,6 @@ use App\Enums\PeriodStatus;
 use App\Models\AcademicYear;
 use App\Models\Period;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PeriodSeeder extends Seeder

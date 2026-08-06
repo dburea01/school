@@ -21,7 +21,9 @@ class AcademicYearController extends Controller
     {
         $this->authorize('viewAny', AcademicYear::class);
 
-        $academicYears = AcademicYear::with('periods')->orderBy('start_date', 'desc')->get();
+        $academicYears = AcademicYear::with(['periods' => function ($query) {
+            $query->orderBy('position');
+        }])->orderBy('start_date', 'desc')->get();
 
         return view('academic-years.index', [
             'academicYears' => $academicYears,
@@ -106,7 +108,7 @@ class AcademicYearController extends Controller
         $this->authorize('delete', $academicYear);
 
         try {
-           $academicYear->delete();
+            $academicYear->delete();
 
             return back()->with('success', "$academicYear->name supprimée");
         } catch (\Exception $e) {

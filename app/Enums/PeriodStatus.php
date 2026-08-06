@@ -17,6 +17,15 @@ enum PeriodStatus: string
         };
     }
 
+    public function description(): string
+    {
+        return match ($this) {
+            self::UPCOMING => 'La période est à venir. Non encore ouverte.',
+            self::OPEN => 'La période est ouverte à la saisie de notes.',
+            self::CLOSED => "La période est fermée. Plus possible d'y saisir des notes.",
+        };
+    }
+
     public function color(): string
     {
         return match ($this) {

@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Enums\AcademicYearStatus;
 use App\Models\AcademicYear;
 use App\Models\User;
 

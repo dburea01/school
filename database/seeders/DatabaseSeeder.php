@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             SchoolSeeder::class,
             UserSeeder::class,
             AcademicYearSeeder::class,
-            PeriodSeeder::class
+            PeriodSeeder::class,
         ]);
     }
 }

@@ -4,10 +4,10 @@ use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactAuthorController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PeriodController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('the-author', function () {
