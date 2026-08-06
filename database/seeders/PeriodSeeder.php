@@ -28,22 +28,22 @@ class PeriodSeeder extends Seeder
                     'name' => 'Trimestre 1',
                     'short_name' => 'T1',
                     'position' => 1,
-                    'start_date' => $yearStart->copy()->format('Y-m-d'), // Ex: 01/09
-                    'end_date' => $yearStart->copy()->addMonths(3)->subDay()->format('Y-m-d'), // Ex: 30/11
+                    'start_date' => $yearStart->copy()->format('d/m/Y'), 
+                    'end_date' => $yearStart->copy()->addMonths(3)->subDay()->format('d/m/Y'),
                 ],
                 [
                     'name' => 'Trimestre 2',
                     'short_name' => 'T2',
                     'position' => 2,
-                    'start_date' => $yearStart->copy()->addMonths(3)->format('Y-m-d'), // Ex: 01/12
-                    'end_date' => $yearStart->copy()->addMonths(7)->subDay()->format('Y-m-d'), // Ex: 31/03
+                    'start_date' => $yearStart->copy()->addMonths(3)->format('d/m/Y'), 
+                    'end_date' => $yearStart->copy()->addMonths(7)->subDay()->format('d/m/Y'),
                 ],
                 [
                     'name' => 'Trimestre 3',
                     'short_name' => 'T3',
                     'position' => 3,
-                    'start_date' => $yearStart->copy()->addMonths(7)->format('Y-m-d'), // Ex: 01/04
-                    'end_date' => $yearEnd->format('Y-m-d'), // Ex: 31/08
+                    'start_date' => $yearStart->copy()->addMonths(7)->format('d/m/Y'),
+                    'end_date' => $yearEnd->format('d/m/Y'),
                 ],
             ];
 
