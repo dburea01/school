@@ -182,6 +182,7 @@
 
 
 {{-- Modale de confirmation de suppression --}}
+@if ($period->exists)
 <div class="modal fade" id="deletePeriodModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow rounded-4">
@@ -203,5 +204,6 @@
         </div>
     </div>
 </div>
+@endif
 
 @endsection
