@@ -6,7 +6,7 @@ SCHOOL est un logicial open source. Vous êtes libre de l'installer, l'utiliser 
 
 SCHOOL est majoritairement destiné à la gestion d'une école dont les fonctionnalités se rapprochent d'une école française. SCHOOL est en français. 
 
-Une démonstration est disponible ici : [github](https://github.com/dburea01/school).
+Une démonstration est disponible ici : [https://school-production-qgsgo1.laravel.cloud/](https://school-production-qgsgo1.laravel.cloud/). Attention : dev en cours, cette plateforme de démo risque parfois de ne pas marcher correctement. 
 
 ## 🤝 Contribution & Recherche de Product Owner (PO)
 
