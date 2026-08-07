@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\SubjectFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,8 +19,18 @@ use Illuminate\Database\Eloquent\Model;
 ])]
 class Subject extends Model
 {
-    /** @use HasFactory<\Database\Factories\SubjectFactory> */
+    use HasCreatedUpdatedBy, HasUuids;
+
+    /** @use HasFactory<SubjectFactory> */
     use HasFactory;
 
-    use HasUuids, HasCreatedUpdatedBy;
+    public function setNameAttribute(string $value): void
+    {
+        $this->attributes['name'] = ucwords($value);
+    }
+
+    public function setShortNameAttribute(string $value): void
+    {
+        $this->attributes['short_name'] = strtoupper($value);
+    }
 }

@@ -1,8 +1,6 @@
-
-
 @can('update', App\Models\School::class)
 <a href="{{ route('school.edit') }}"
-    class="nav-link d-flex align-items-center rounded-3 px-1 py-2 {{ request()->routeIs('school.edit') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
+    class="nav-link d-flex align-items-center rounded-3 px-1 py-1 {{ request()->routeIs('school.edit') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
     <i class="bi bi-buildings me-3 fs-5"></i>
     <span>Modifier école</span>
 </a>
@@ -10,15 +8,23 @@
 
 @can('viewAny', App\Models\AcedemicYear::class)
 <a href="{{ route('academic-years.index') }}"
-    class="nav-link d-flex align-items-center rounded-3 px-1 py-2 {{ request()->routeIs('academic-years.index') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
+    class="nav-link d-flex align-items-center rounded-3 px-1 py-1 {{ request()->routeIs('academic-years.index') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
     <i class="bi bi-calendar-range me-3 fs-5"></i>
     <span>Années scolaires</span>
 </a>
 @endcan
 
+@can('viewAny', App\Models\Subject::class)
+<a href="{{ route('subjects.index') }}"
+    class="nav-link d-flex align-items-center rounded-3 px-1 py-1 {{ request()->routeIs('subjects.index') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
+    <i class="bi bi-bookshelf me-3 fs-5"></i>
+    <span>Matières</span>
+</a>
+@endcan
+
 @can('viewAny', App\Models\User::class)
 <a href="{{ route('users.index') }}"
-    class="nav-link d-flex align-items-center rounded-3 px-1 py-2 {{ request()->routeIs('users.index') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
+    class="nav-link d-flex align-items-center rounded-3 px-1 py-1 {{ request()->routeIs('users.index') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
     <i class="bi bi-people me-3 fs-5"></i>
     <span>Utilisateurs</span>
 </a>

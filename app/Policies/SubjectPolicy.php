@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Subject;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class SubjectPolicy
 {
@@ -13,7 +12,7 @@ class SubjectPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->isAdmin() || $user->isDirector();
     }
 
     /**
@@ -21,7 +20,7 @@ class SubjectPolicy
      */
     public function view(User $user, Subject $subject): bool
     {
-        return false;
+        return $user->isAdmin() || $user->isDirector();
     }
 
     /**
@@ -29,7 +28,7 @@ class SubjectPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->isAdmin() || $user->isDirector();
     }
 
     /**
@@ -37,7 +36,7 @@ class SubjectPolicy
      */
     public function update(User $user, Subject $subject): bool
     {
-        return false;
+        return $user->isAdmin() || $user->isDirector();
     }
 
     /**
@@ -45,22 +44,6 @@ class SubjectPolicy
      */
     public function delete(User $user, Subject $subject): bool
     {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Subject $subject): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Subject $subject): bool
-    {
-        return false;
+        return $user->isAdmin() || $user->isDirector();
     }
 }

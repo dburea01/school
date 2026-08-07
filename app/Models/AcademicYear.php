@@ -17,8 +17,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $id
  * @property string $name
  * @property AcademicYearStatus $status <-- Informe Larastan du type Enum
- * @property Carbon $start_date  <-- Indique à Larastan que c'est une instance Carbon
- * @property Carbon $end_date    <-- Indique à Larastan que c'est une instance Carbon
+ * @property Carbon $start_date <-- Indique à Larastan que c'est une instance Carbon
+ * @property Carbon $end_date <-- Indique à Larastan que c'est une instance Carbon
  */
 #[Fillable([
     'name',

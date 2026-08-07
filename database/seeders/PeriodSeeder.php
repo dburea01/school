@@ -28,14 +28,14 @@ class PeriodSeeder extends Seeder
                     'name' => 'Trimestre 1',
                     'short_name' => 'T1',
                     'position' => 1,
-                    'start_date' => $yearStart->copy()->format('d/m/Y'), 
+                    'start_date' => $yearStart->copy()->format('d/m/Y'),
                     'end_date' => $yearStart->copy()->addMonths(3)->subDay()->format('d/m/Y'),
                 ],
                 [
                     'name' => 'Trimestre 2',
                     'short_name' => 'T2',
                     'position' => 2,
-                    'start_date' => $yearStart->copy()->addMonths(3)->format('d/m/Y'), 
+                    'start_date' => $yearStart->copy()->addMonths(3)->format('d/m/Y'),
                     'end_date' => $yearStart->copy()->addMonths(7)->subDay()->format('d/m/Y'),
                 ],
                 [
