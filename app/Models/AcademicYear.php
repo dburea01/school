@@ -84,4 +84,10 @@ class AcademicYear extends Model
     {
         return $this->hasMany(Period::class);
     }
+
+    /** @return HasMany<Level, $this> */
+    public function levels(): HasMany
+    {
+        return $this->hasMany(Level::class);
+    }
 }

@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Period;
+use App\Models\Level;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Period>
+ * @extends Factory<Level>
  */
-class PeriodFactory extends Factory
+class LevelFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,7 @@ class PeriodFactory extends Factory
     public function definition(): array
     {
         return [
-            'comment' => fake('fr_FR')->sentence(),
+            'comment' => fake()->sentence(),
         ];
     }
 }
