@@ -11,11 +11,13 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <h1 class="fw-bold mb-0">Les niveaux ({{ $levels->count() }})</h1>
+        @if($academicYear->status !== App\Enums\AcademicYearStatus::ARCHIVED)
         @can('create', App\Models\Level::class)
         <a href="{{ route('academic-years.levels.create', $academicYear) }}" class="btn btn-primary btn-sm">
             + Créer
         </a>
         @endcan
+        @endif
     </div>
 
     <div class="table-responsive">
@@ -58,7 +60,7 @@
                             </a>
                     </td>
                     <td>
-                        @if($academicYear->status === App\Enums\AcademicYearStatus::DRAFT)
+                        @if($academicYear->status !== App\Enums\AcademicYearStatus::ARCHIVED)
                         <button class="btn btn-sm  btn-link btn-delete-level"
                             data-bs-toggle="modal"
                             data-bs-target="#exampleModal"

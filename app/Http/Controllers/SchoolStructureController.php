@@ -14,7 +14,7 @@ class SchoolStructureController extends Controller
     public function index(): View
     {
         $this->authorize('viewAny', Level::class);
-        
+
         $academicYears = AcademicYear::orderBy('start_date', 'desc')->withCount('levels')->get();
 
         return view('structure.index', [
