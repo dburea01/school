@@ -54,8 +54,8 @@
                     <td class="text-center">
                         <span class="badge rounded-pill text-bg-light">
                             <a href="#">
-                                @todo
-                                @if ($academicYear->levels_count <= 1) classe @else classes @endif
+                                {{ $level->classrooms_count }}
+                                @if ($level->classrooms_count <= 1) classe @else classes @endif
                                     </span>
                             </a>
                     </td>

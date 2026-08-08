@@ -22,7 +22,7 @@ class LevelController extends Controller
     {
         $this->authorize('viewAny', Level::class);
 
-        $levels = Level::where('academic_year_id', $academicYear->id)->orderBy('position')->get();
+        $levels = Level::where('academic_year_id', $academicYear->id)->withCount('classrooms')->orderBy('position')->get();
 
         return view('levels.index', [
             'academicYear' => $academicYear,
