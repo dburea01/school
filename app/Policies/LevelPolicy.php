@@ -12,7 +12,7 @@ class LevelPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->isAdmin();
     }
 
     /**
@@ -20,7 +20,7 @@ class LevelPolicy
      */
     public function view(User $user, Level $level): bool
     {
-        return false;
+        return $user->isAdmin();
     }
 
     /**
@@ -28,7 +28,7 @@ class LevelPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->isAdmin();
     }
 
     /**
@@ -36,7 +36,7 @@ class LevelPolicy
      */
     public function update(User $user, Level $level): bool
     {
-        return false;
+        return $user->isAdmin();
     }
 
     /**
@@ -44,22 +44,6 @@ class LevelPolicy
      */
     public function delete(User $user, Level $level): bool
     {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Level $level): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Level $level): bool
-    {
-        return false;
+        return $user->isAdmin();
     }
 }

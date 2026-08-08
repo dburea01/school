@@ -19,7 +19,6 @@
                 <tr>
                     <th>Année scolaire</th>
                     <th>Statut</th>
-
                     <th>Niveaux</th>
                 </tr>
             </thead>
@@ -29,7 +28,7 @@
                 @foreach ($academicYears as $academicYear)
                 <tr>
                     <td>
-                        <a href="{{ route('academic-years.levels.index', $academicYear) }}">{{ $academicYear->name}}</a>
+                        {{ $academicYear->name}}
                     </td>
 
                     <td>
@@ -40,9 +39,11 @@
 
                     <td>
                         <span class="badge rounded-pill text-bg-light">
-                            {{ $academicYear->levels_count }}
-                            @if ($academicYear->levels_count <= 1) niveau @else niveaux @endif
-                                </span>
+                            <a href="{{ route('academic-years.levels.index', $academicYear) }}">
+                                {{ $academicYear->levels_count }}
+                                @if ($academicYear->levels_count <= 1) niveau @else niveaux @endif
+                                    </span>
+                            </a>
                     </td>
                 </tr>
 

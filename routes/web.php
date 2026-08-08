@@ -56,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('subjects', SubjectController::class)->whereUuid('subject')->except('show');
 
     Route::get('structure', [SchoolStructureController::class, 'index'])->name('structure.index');
-    Route::resource('academic-years.levels', LevelController::class)->shallow();
+    Route::resource('academic-years.levels', LevelController::class)->whereUuid(['academic-year', 'level']);
 });
 
 Route::get('contact-the-author', [ContactAuthorController::class, 'show'])->name('contact-the-author');
