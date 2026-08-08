@@ -6,25 +6,19 @@
 
 @include('errors.session-values')
 
-<div class="row">
-    <div class="d-flex justify-content-center align-items-center gap-3 mb-4">
+<div class="col-12 col-xl-10 mx-auto">
 
+    <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="fw-bold mb-0">Liste des années scolaires</h1>
-
         @can('create', App\Models\AcademicYear::class)
         <a href="{{ route('academic-years.create') }}" class="btn btn-primary btn-sm">
             + Créer
         </a>
         @endcan
-
     </div>
-</div>
 
 
-
-<div class="row">
-
-    <div class="col-md-8 mx-auto">
+    <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
 
             <thead class="table-light">
