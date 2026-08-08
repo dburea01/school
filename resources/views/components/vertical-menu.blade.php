@@ -14,6 +14,14 @@
 </a>
 @endcan
 
+@can('viewAny', App\Models\Level::class)
+<a href="{{ route('structure.index') }}"
+    class="nav-link d-flex align-items-center rounded-3 px-1 py-1 {{ request()->routeIs('structure.index') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
+    <i class="bi bi-diagram-3 me-3 fs-5"></i>
+    <span>Niveaux/classes</span>
+</a>
+@endcan
+
 @can('viewAny', App\Models\Subject::class)
 <a href="{{ route('subjects.index') }}"
     class="nav-link d-flex align-items-center rounded-3 px-1 py-1 {{ request()->routeIs('subjects.index') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">

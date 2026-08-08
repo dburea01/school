@@ -4,8 +4,10 @@ use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactAuthorController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LevelController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\SchoolStructureController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +54,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('academic-years', AcademicYearController::class)->whereUuid('academic_year');
     Route::resource('academic-years.periods', PeriodController::class)->whereUuid(['academic_year', 'period'])->except('index');
     Route::resource('subjects', SubjectController::class)->whereUuid('subject')->except('show');
+
+    Route::get('structure', [SchoolStructureController::class, 'index'])->name('structure.index');
+    Route::resource('academic-years.levels', LevelController::class)->shallow();
 });
 
 Route::get('contact-the-author', [ContactAuthorController::class, 'show'])->name('contact-the-author');
