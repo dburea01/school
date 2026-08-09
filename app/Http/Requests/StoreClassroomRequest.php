@@ -34,7 +34,6 @@ class StoreClassroomRequest extends FormRequest
         return [
             'name' => 'required|max:30',
             'short_name' => 'required|max:5',
-            'position' => 'required|int|between:1,100',
             'comment' => 'nullable|max:300',
         ];
     }
@@ -52,10 +51,6 @@ class StoreClassroomRequest extends FormRequest
 
             'short_name.required' => 'Nom court obligatoire',
             'short_name.max' => 'Nom court trop long (5 caractères max)',
-
-            'position.required' => 'Position de la classe obligatoire',
-            'position.int' => 'Position doit être un entier entre 1 et 100',
-            'position.between' => 'Position doit être un entier entre 1 et 100',
 
             'comment.max' => 'Commentaire trop long (300 caractères maximum)',
         ];

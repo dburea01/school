@@ -28,7 +28,6 @@
                 <tr>
                     <th>Nom</th>
                     <th class="text-center">Nom court</th>
-                    <th class="text-center">Position</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
@@ -47,9 +46,7 @@
                     <td class="text-center">
                         {{ $classroom->short_name }}
                     </td>
-                    <td class="text-center">
-                        {{ $classroom->position }}
-                    </td>
+                   
                     
                     <td>
                         @if($academicYear->status !== App\Enums\AcademicYearStatus::ARCHIVED)

@@ -22,7 +22,7 @@ class ClassroomController extends Controller
     {
         $this->authorize('viewAny', Classroom::class);
 
-        $classrooms = Classroom::where('academic_year_id', $academicYear->id)->orderBy('position')->get();
+        $classrooms = Classroom::where('academic_year_id', $academicYear->id)->orderBy('name')->get();
 
         return view('classrooms.index', [
             'academicYear' => $academicYear,

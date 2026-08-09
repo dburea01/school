@@ -16,7 +16,7 @@ return new class extends Migration
             $table->uuid('academic_year_id');
             $table->string('name');
             $table->string('short_name');
-            $table->tinyInteger('position');
+            // $table->tinyInteger('position');
             $table->string('comment')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -22,7 +22,7 @@ class ClassroomFactory extends Factory
         return [
             'name' => 'Classe '.$suffixe,
             'short_name' => $suffixe,
-            'position' => rand(1, 10),
+            // 'position' => rand(1, 10),
             'comment' => fake()->sentence(),
         ];
     }

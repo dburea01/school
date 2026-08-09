@@ -58,21 +58,6 @@
                             @enderror
                         </div>
 
-                        {{-- position --}}
-                        <div class="col-2">
-                            <label for="position" class="form-label">Position *</label>
-                            <input type="number"
-                                id="position"
-                                name="position"
-                                min="0" max="100"
-                                required
-                                class="form-control form-control-sm @error('position') is-invalid @enderror"
-                                value="{{ old('position', $classroom->position) }}">
-                            @error('position')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
                         {{-- Comment --}}
                         <div class="col-12">
                             <label for="comment" class="form-label">Commentaire</label>

@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
     'academic_year_id',
     'name',
     'short_name',
-    'position',
     'comment',
     'created_by',
     'updated_by',
