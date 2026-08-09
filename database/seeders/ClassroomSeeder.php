@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Enums\UserRole;
 use App\Models\AcademicYear;
 use App\Models\Classroom;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class ClassroomSeeder extends Seeder
@@ -16,6 +18,8 @@ class ClassroomSeeder extends Seeder
         $academicYears = AcademicYear::all();
         $levels = ['6ème', '5ème', '4ème', '3ème'];
 
+        $teachers = User::where('role', UserRole::TEACHER)->get();
+
         foreach ($academicYears as $academicYear) {
             foreach ($levels as $level) {
                 $count = rand(2, 4); // 2, 3 ou 4 classes par niveau
@@ -25,8 +29,9 @@ class ClassroomSeeder extends Seeder
 
                     Classroom::factory()->create([
                         'academic_year_id' => $academicYear->id,
-                        'name'             => "{$level} {$letter}",                     // Ex: "6ème A"
-                        'short_name'       => str_replace('ème', '', $level) . $letter, // Ex: "6A"
+                        'name' => "{$level} {$letter}",                     // Ex: "6ème A"
+                        'short_name' => str_replace('ème', '', $level).$letter, // Ex: "6A"
+                        'user_id' => fake()->boolean() ? $teachers->random()->id : null,
                     ]);
                 }
             }

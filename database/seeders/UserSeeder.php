@@ -32,6 +32,7 @@ class UserSeeder extends Seeder
         // some teachers
         User::factory()->count(rand(5, 10))->create([
             'role' => 'TEACHER',
+            'status' => 'ACTIVE',
             'gender' => null,
         ]);
 

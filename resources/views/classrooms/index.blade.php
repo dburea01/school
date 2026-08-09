@@ -28,6 +28,7 @@
                 <tr>
                     <th>Nom</th>
                     <th class="text-center">Nom court</th>
+                    <th>Responsable</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
@@ -45,6 +46,10 @@
                     </td>
                     <td class="text-center">
                         {{ $classroom->short_name }}
+                    </td>
+
+                    <td>
+                        {{ $classroom->user?->full_name }}
                     </td>
                    
                     

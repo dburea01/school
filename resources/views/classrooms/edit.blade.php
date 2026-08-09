@@ -29,7 +29,7 @@
                     <div class="row g-3">
 
                         {{-- Name --}}
-                        <div class="col-6">
+                        <div class="col-4">
                             <label for="name" class="form-label">Nom *</label>
                             <input type="text"
                                 id="name"
@@ -44,7 +44,7 @@
                         </div>
 
                         {{-- short name --}}
-                        <div class="col-4">
+                        <div class="col-2">
                             <label for="short_name" class="form-label">Nom court *</label>
                             <input type="text"
                                 id="short_name"
@@ -54,6 +54,22 @@
                                 class="form-control form-control-sm @error('short_name') is-invalid @enderror"
                                 value="{{ old('short_name', $classroom->short_name) }}">
                             @error('short_name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- user_id --}}
+                        <div class="col-6">
+                            <label for="user_id" class="form-label">Professeur principal</label>
+                            <x-select-user
+                                id="user_id"
+                                name="user_id"
+                                class="form-select form-select-sm"
+                                role="TEACHER"
+                                :value="old('user_id', $classroom->user_id)"
+                            />
+
+                            @error('user_id')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

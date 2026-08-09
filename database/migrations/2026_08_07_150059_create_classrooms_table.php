@@ -16,7 +16,7 @@ return new class extends Migration
             $table->uuid('academic_year_id');
             $table->string('name');
             $table->string('short_name');
-            // $table->tinyInteger('position');
+            $table->uuid('user_id')->nullable();
             $table->string('comment')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('updated_by')->nullable();
 
             $table->foreign('academic_year_id')->references('id')->on('academic_years')->cascadeOnDelete();
+            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
         });
     }
 
