@@ -8,23 +8,23 @@
 
 @can('viewAny', App\Models\AcedemicYear::class)
 <a href="{{ route('academic-years.index') }}"
-    class="nav-link d-flex align-items-center rounded-3 px-1 py-1 {{ request()->routeIs('academic-years.index') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
+    class="nav-link d-flex align-items-center rounded-3 px-1 py-1 {{ request()->routeIs('academic-years.*') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
     <i class="bi bi-calendar-range me-3 fs-5"></i>
     <span>Années scolaires</span>
 </a>
 @endcan
 
-@can('viewAny', App\Models\Level::class)
+@can('viewAny', App\Models\Classroom::class)
 <a href="{{ route('structure.index') }}"
-    class="nav-link d-flex align-items-center rounded-3 px-1 py-1 {{ request()->routeIs('structure.index') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
+    class="nav-link d-flex align-items-center rounded-3 px-1 py-1 {{ request()->routeIs('structure.index') || request()->routeIs('academic-years.classrooms.*') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
     <i class="bi bi-diagram-3 me-3 fs-5"></i>
-    <span>Niveaux/classes</span>
+    <span>Classes</span>
 </a>
 @endcan
 
 @can('viewAny', App\Models\Subject::class)
 <a href="{{ route('subjects.index') }}"
-    class="nav-link d-flex align-items-center rounded-3 px-1 py-1 {{ request()->routeIs('subjects.index') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
+    class="nav-link d-flex align-items-center rounded-3 px-1 py-1 {{ request()->routeIs('subjects.*') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
     <i class="bi bi-bookshelf me-3 fs-5"></i>
     <span>Matières</span>
 </a>
@@ -32,7 +32,7 @@
 
 @can('viewAny', App\Models\User::class)
 <a href="{{ route('users.index') }}"
-    class="nav-link d-flex align-items-center rounded-3 px-1 py-1 {{ request()->routeIs('users.index') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
+    class="nav-link d-flex align-items-center rounded-3 px-1 py-1 {{ request()->routeIs('users.*') ? 'active bg-primary-subtle text-primary fw-bold' : 'text-secondary' }}">
     <i class="bi bi-people me-3 fs-5"></i>
     <span>Utilisateurs</span>
 </a>

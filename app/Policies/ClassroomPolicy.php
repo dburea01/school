@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Level;
+use App\Models\Classroom;
 use App\Models\User;
 
-class LevelPolicy
+class ClassroomPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -18,7 +18,7 @@ class LevelPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Level $level): bool
+    public function view(User $user, Classroom $classroom): bool
     {
         return $user->isAdmin();
     }
@@ -34,7 +34,7 @@ class LevelPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Level $level): bool
+    public function update(User $user, Classroom $classroom): bool
     {
         return $user->isAdmin();
     }
@@ -42,7 +42,7 @@ class LevelPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Level $level): bool
+    public function delete(User $user, Classroom $classroom): bool
     {
         return $user->isAdmin();
     }

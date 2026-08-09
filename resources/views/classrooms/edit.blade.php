@@ -19,10 +19,10 @@
 
                 @include('errors.messages-error-info')
 
-                <form action="{{ $level->exists ? route('academic-years.levels.update', [$academicYear, $level]) : route('academic-years.levels.store', $academicYear) }}" method="POST">
+                <form action="{{ $classroom->exists ? route('academic-years.classrooms.update', [$academicYear, $classroom]) : route('academic-years.classrooms.store', $academicYear) }}" method="POST">
                     @csrf
 
-                    @if ($level->exists)
+                    @if ($classroom->exists)
                     @method('PUT')
                     @endif
 
@@ -37,7 +37,7 @@
                                 maxlength="30"
                                 required
                                 class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                value="{{ old('name', $level->name) }}">
+                                value="{{ old('name', $classroom->name) }}">
                             @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -52,7 +52,7 @@
                                 maxlength="5"
                                 required
                                 class="form-control form-control-sm @error('short_name') is-invalid @enderror"
-                                value="{{ old('short_name', $level->short_name) }}">
+                                value="{{ old('short_name', $classroom->short_name) }}">
                             @error('short_name')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -67,7 +67,7 @@
                                 min="0" max="100"
                                 required
                                 class="form-control form-control-sm @error('position') is-invalid @enderror"
-                                value="{{ old('position', $level->position) }}">
+                                value="{{ old('position', $classroom->position) }}">
                             @error('position')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -81,7 +81,7 @@
                                 name="comment"
                                 maxlength="300"
                                 rows="4"
-                                class="form-control form-control-sm @error('comment') is-invalid @enderror">{{ old('comment', $level->comment) }}</textarea>
+                                class="form-control form-control-sm @error('comment') is-invalid @enderror">{{ old('comment', $classroom->comment) }}</textarea>
                             @error('comment')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -91,7 +91,7 @@
 
                     {{-- Actions --}}
                     <div class="d-flex justify-content-end gap-2 mt-1 pt-3">
-                        <a href="{{ route('academic-years.levels.index', $academicYear) }}" class="btn btn-light btn-sm border">
+                        <a href="{{ route('academic-years.classrooms.index', $academicYear) }}" class="btn btn-light btn-sm border">
                             Annuler
                         </a>
                         <button class="btn btn-success btn-sm px-4" type="submit" id="submit">
@@ -102,7 +102,7 @@
                 </form>
 
                 <div class="text-muted small">
-                    <x-created-updated-by :model="$level" />
+                    <x-created-updated-by :model="$classroom" />
                 </div>
 
             </div>

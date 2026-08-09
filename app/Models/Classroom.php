@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Database\Factories\LevelFactory;
+use Database\Factories\ClassroomFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[Fillable([
@@ -19,18 +18,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
     'created_by',
     'updated_by',
 ])]
-class Level extends Model
+class Classroom extends Model
 {
     use HasCreatedUpdatedBy, HasUuids;
 
-    /** @use HasFactory<LevelFactory> */
+    /** @use HasFactory<ClassroomFactory> */
     use HasFactory;
 
     use SoftDeletes;
-
-    /** @return HasMany<Classroom, $this> */
-    public function classrooms(): HasMany
-    {
-        return $this->hasMany(Classroom::class);
-    }
 }

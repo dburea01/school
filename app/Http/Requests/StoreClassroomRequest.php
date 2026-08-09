@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Level;
+use App\Models\Classroom;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreLevelRequest extends FormRequest
+class StoreClassroomRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,11 +14,11 @@ class StoreLevelRequest extends FormRequest
     public function authorize(): bool
     {
         if ($this->user() && $this->method() == 'POST') {
-            return $this->user()->can('create', Level::class);
+            return $this->user()->can('create', Classroom::class);
         }
 
         if ($this->user() && $this->method() == 'PUT') {
-            return $this->user()->can('update', $this->route('level'));
+            return $this->user()->can('update', $this->route('classroom'));
         }
 
         return false;
@@ -53,7 +53,7 @@ class StoreLevelRequest extends FormRequest
             'short_name.required' => 'Nom court obligatoire',
             'short_name.max' => 'Nom court trop long (5 caractères max)',
 
-            'position.required' => 'Position du niveau obligatoire',
+            'position.required' => 'Position de la classe obligatoire',
             'position.int' => 'Position doit être un entier entre 1 et 100',
             'position.between' => 'Position doit être un entier entre 1 et 100',
 

@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ContactAuthorController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LevelController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolStructureController;
@@ -56,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('subjects', SubjectController::class)->whereUuid('subject')->except('show');
 
     Route::get('structure', [SchoolStructureController::class, 'index'])->name('structure.index');
-    Route::resource('academic-years.levels', LevelController::class)->whereUuid(['academic-year', 'level']);
+    Route::resource('academic-years.classrooms', ClassroomController::class)->whereUuid(['academic-year', 'classroom']);
 });
 
 Route::get('contact-the-author', [ContactAuthorController::class, 'show'])->name('contact-the-author');

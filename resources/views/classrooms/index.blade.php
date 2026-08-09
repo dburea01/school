@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Liste des niveaux')
+@section('title', 'Liste des classes')
 
 @section('content')
 
@@ -10,10 +10,10 @@
     <h1 class="fw-bold mb-0">Année scolaire : {{ $academicYear->name }}</h1>
     <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <h1 class="fw-bold mb-0">Les niveaux ({{ $levels->count() }})</h1>
+        <h1 class="fw-bold mb-0">Les classes ({{ $classrooms->count() }})</h1>
         @if($academicYear->status !== App\Enums\AcademicYearStatus::ARCHIVED)
-        @can('create', App\Models\Level::class)
-        <a href="{{ route('academic-years.levels.create', $academicYear) }}" class="btn btn-primary btn-sm">
+        @can('create', App\Models\Classroom::class)
+        <a href="{{ route('academic-years.classrooms.create', $academicYear) }}" class="btn btn-primary btn-sm">
             + Créer
         </a>
         @endcan
@@ -29,43 +29,35 @@
                     <th>Nom</th>
                     <th class="text-center">Nom court</th>
                     <th class="text-center">Position</th>
-                    <th class="text-center">Classes</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
 
             <tbody>
 
-                @foreach ($levels as $level)
+                @foreach ($classrooms as $classroom)
 
                 <tr>
                     <td>
-                        <a href="{{ route('academic-years.levels.edit', [$academicYear, $level]) }}" class="fw-bold text-primary text-decoration-none me-2">
-                            {{ $level->name }}
+                        <a href="{{ route('academic-years.classrooms.edit', [$academicYear, $classroom]) }}" class="fw-bold text-primary text-decoration-none me-2">
+                            {{ $classroom->name }}
                         </a>
 
                     </td>
                     <td class="text-center">
-                        {{ $level->short_name }}
+                        {{ $classroom->short_name }}
                     </td>
                     <td class="text-center">
-                        {{ $level->position }}
+                        {{ $classroom->position }}
                     </td>
-                    <td class="text-center">
-                        <span class="badge rounded-pill text-bg-light">
-                            <a href="#">
-                                {{ $level->classrooms_count }}
-                                @if ($level->classrooms_count <= 1) classe @else classes @endif
-                                    </span>
-                            </a>
-                    </td>
+                    
                     <td>
                         @if($academicYear->status !== App\Enums\AcademicYearStatus::ARCHIVED)
-                        <button class="btn btn-sm  btn-link btn-delete-level"
+                        <button class="btn btn-sm  btn-link btn-delete-classroom"
                             data-bs-toggle="modal"
                             data-bs-target="#exampleModal"
-                            data-id="{{ $level->id }}"
-                            data-name="{{ $level->name }}">
+                            data-id="{{ $classroom->id }}"
+                            data-name="{{ $classroom->name }}">
                             <i class="bi bi-trash"></i>
                         </button>
                         @endif
@@ -102,12 +94,12 @@
 
                 {{-- Titre et sous-titre --}}
                 <p class="modal-title fw-bold mb-2" id="exampleModalLabel">
-                    Supprimer le niveau <span id="level-name-to-delete" class="text-danger"></span> ?
+                    Supprimer la classe <span id="classroom-name-to-delete" class="text-danger"></span> ?
                 </p>
 
                 <p class="text-muted small">
-                    Êtes-vous sûr de vouloir supprimer ce niveau ? <br>
-                    <span class="fw-semibold text-danger">Cette action est définitive et irréversible.</span>
+                    Êtes-vous sûr de vouloir supprimer cette classe ? <br>
+                    <span class="fw-semibold text-danger">En supprimant la classe, vous supprimez également toutes ses affectations. Cette action est définitive et irréversible.</span>
                 </p>
             </div>
 
@@ -118,7 +110,7 @@
                     Annuler
                 </button>
 
-                <form id="form-delete-level" method="POST" class="m-0">
+                <form id="form-delete-classroom" method="POST" class="m-0">
                     @csrf
                     @method('DELETE')
 
@@ -137,12 +129,12 @@
 <script>
     $(document).ready(function() {
 
-        $('.btn-delete-level').click(function() {
-            let levelId = $(this).attr('data-id')
+        $('.btn-delete-classroom').click(function() {
+            let classroomId = $(this).attr('data-id')
             let name = $(this).attr('data-name')
 
-            $('#level-name-to-delete').text(name)
-            $('#form-delete-level').attr('action', '/academic-years/{{ $academicYear->id }}' + '/levels/' + levelId)
+            $('#classroom-name-to-delete').text(name)
+            $('#form-delete-classroom').attr('action', '/academic-years/{{ $academicYear->id }}' + '/classrooms/' + classroomId)
         })
 
     });
