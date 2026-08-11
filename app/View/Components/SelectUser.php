@@ -16,7 +16,7 @@ class SelectUser extends Component
 
     public ?string $value;
 
-    /** @var Collection<int,User> $users */
+    /** @var Collection<int,User> */
     public Collection $users;
 
     public function __construct(

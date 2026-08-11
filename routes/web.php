@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AcademicYearController;
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ContactAuthorController;
@@ -57,6 +58,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('structure', [SchoolStructureController::class, 'index'])->name('structure.index');
     Route::resource('academic-years.classrooms', ClassroomController::class)->whereUuid(['academic-year', 'classroom']);
+
+    Route::resource('classrooms/{classroom}/assignments', AssignmentController::class)->whereUuid(['classroom', 'assignment'])->scoped();
 });
 
 Route::get('contact-the-author', [ContactAuthorController::class, 'show'])->name('contact-the-author');

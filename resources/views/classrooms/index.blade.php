@@ -29,6 +29,8 @@
                     <th>Nom</th>
                     <th class="text-center">Nom court</th>
                     <th>Responsable</th>
+                    <th class="text-center">Elèves</th>
+                    <th class="text-center">Enseignants</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
@@ -49,10 +51,26 @@
                     </td>
 
                     <td>
-                        {{ $classroom->user?->full_name }}
+                        {{ $classroom->user? $classroom->user->full_name : ' - ' }}
                     </td>
-                   
-                    
+
+                    <td class="text-center">
+                        <a href="{{ route('assignments.index', [$classroom, 'role' => App\Enums\UserRole::STUDENT]) }}" class="text-decoration-none">
+                            <span class="badge rounded-pill bg-primary">
+                                {{ $classroom->students_count }}
+                            </span>
+                        </a>
+                    </td>
+
+                    <td class="text-center">
+                        <a href="{{ route('assignments.index', [$classroom, 'role' => App\Enums\UserRole::TEACHER]) }}" class="text-decoration-none">
+                            <span class="badge rounded-pill bg-info">
+                                {{ $classroom->teachers_count }}
+                            </span>
+                        </a>
+                    </td>
+
+
                     <td>
                         @if($academicYear->status !== App\Enums\AcademicYearStatus::ARCHIVED)
                         <button class="btn btn-sm  btn-link btn-delete-classroom"
@@ -69,8 +87,6 @@
                 @endforeach
             </tbody>
         </table>
-
-
 
     </div>
 

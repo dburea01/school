@@ -23,6 +23,7 @@ class ClassroomController extends Controller
         $this->authorize('viewAny', Classroom::class);
 
         $classrooms = Classroom::where('academic_year_id', $academicYear->id)
+            ->withCount(['students', 'teachers'])
             ->with('user')->orderBy('name')->get();
 
         return view('classrooms.index', [
@@ -81,7 +82,7 @@ class ClassroomController extends Controller
         return view('classrooms.edit', [
             'academicYear' => $academicYear,
             'classroom' => $classroom,
-            'pageTitle' => 'Modifier classe '.$classroom->name.' ('.$classroom->short_name.')',
+            'pageTitle' => 'Modifier classe ' . $classroom->name . ' (' . $classroom->short_name . ')',
         ]);
     }
 
