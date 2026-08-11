@@ -1,0 +1,234 @@
+@extends('layout')
+
+@section('title', 'Liste des affectations')
+
+@section('content')
+
+@include('errors.session-values')
+
+<div class="row g-4">
+
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="fw-bold">Année : {{ $academicYear->name }} - Classe : {{ $classroom->name }}</h1>
+
+            <h1 class="fw-bold">Liste des affectations <span class="badge bg-secondary-subtle text-secondary-emphasis fs-6 fw-normal align-middle ms-2">
+                    {{ $assignments->count() }}
+                </span></h1>
+        </div>
+
+        <div class="d-flex gap-2">
+            @can('create', App\Models\Assignment::class)
+            <a href="{{ route('assignments.create', $classroom) }}"
+                class="btn btn-primary btn-sm">
+                + Créer
+            </a>
+            @endcan
+        </div>
+    </div>
+
+    {{-- FILTERS --}}
+    <div class="col-12 col-lg-3">
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+
+                <h2>Filtres</h2>
+
+                <form action="{{ route('assignments.index', $classroom) }}">
+
+
+
+                    {{-- role --}}
+                    <div class="mb-1">
+                        <x-select-user-role name="role"
+                            id="role"
+                            class="form-select form-select-sm"
+                            :value="$role" />
+                    </div>
+
+                    {{-- submit --}}
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-secondary btn-sm">
+                            Appliquer
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- ===== --}}
+    {{-- TABLE --}}
+    {{-- ===== --}}
+    <div class="col-12 col-lg-9">
+
+        <div class="card border-0 shadow-sm">
+
+
+
+            {{-- TABLE --}}
+            <div class="card-body p-0">
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle mb-0">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>Utilisateur</th>
+                                <th>Rôle</th>
+
+                                <th class="text-end"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach ($assignments as $assignment)
+                            <tr>
+
+                                {{-- USER --}}
+
+                                <td class="align-middle">
+                                    <div class="d-flex align-items-center gap-3">
+
+                                        <x-avatar :user="$assignment->user" dimension="44" />
+
+                                        {{-- NOM + EMAIL --}}
+                                        <div class="lh-sm min-w-0">
+                                            <span class="fw-bold text-dark d-block text-truncate">
+                                                {{ $assignment->user->full_name }}
+                                            </span>
+
+                                            <small class="text-muted text-truncate d-block">
+                                                {{ $assignment->user->email }}
+                                            </small>
+                                        </div>
+
+                                    </div>
+                                </td>
+
+                                {{-- ROLE --}}
+                                <td>
+                                    <span class="badge {{ $assignment->user->role->badgeClass() }}">
+                                        {{ $assignment->user->role->label() }}
+                                    </span>
+
+                                    @if($assignment->subject)
+                                    <span class="badge border text-dark" style="background-color: {{ $assignment->subject->color }}">
+                                        {{ $assignment->subject->short_name }}
+                                    </span>
+                                    @endif
+                                </td>
+
+
+
+                                {{-- ACTIONS --}}
+                                <td class="text-end">
+
+                                    @can('delete', $assignment)
+                                    <button class="btn btn-sm  btn-link btn-delete-user"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal"
+                                        data-id="{{ $assignment->id }}"
+                                        data-role="{{ $assignment->user->role->label() }}"
+                                        data-user-name="{{ $assignment->user->full_name }}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                    @endcan
+
+                                </td>
+
+                            </tr>
+                            @endforeach
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</div>
+
+{{-- ============ --}}
+{{-- MODAL DELETE --}}
+{{-- ============ --}}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <p class="modal-title">
+                    Supprimer <span id="user-name-to-delete"></span> (<span id="user-role-to-delete"></span>)
+                </p>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <p class="text-danger fw-bold">
+                    Cette action est définitive.
+                </p>
+                <p class="text-muted small">
+                    Les données liées (affectations, resultats, etc.. ) seront également supprimées.
+                </p>
+            </div>
+
+            <div class="modal-footer">
+
+                <form id="form-delete-user" method="POST">
+                    @csrf
+                    @method('DELETE')
+
+                    <button type="button"
+                        class="btn btn-secondary btn-sm"
+                        data-bs-dismiss="modal">
+                        Annuler
+                    </button>
+
+                    <button type="submit"
+                        class="btn btn-danger btn-sm">
+                        Supprimer
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+@endsection
+
+@section('extra_js')
+<script>
+    $(document).ready(function() {
+
+        $('.btn-delete-user').click(function() {
+            let userId = $(this).attr('data-id')
+            let role = $(this).attr('data-role')
+            let userName = $(this).attr('data-user-name')
+
+            $('#user-name-to-delete').text(userName)
+            $('#user-role-to-delete').text(role)
+            $('#form-delete-user').attr('action', '/users/' + userId)
+        })
+
+    });
+</script>
+@endsection
