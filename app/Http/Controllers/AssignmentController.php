@@ -2,26 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AcademicYearStatus;
 use App\Http\Requests\StoreAssignmentRequest;
 use App\Http\Requests\UpdateAssignmentRequest;
 use App\Models\AcademicYear;
 use App\Models\Assignment;
 use App\Models\Classroom;
-use App\Repositories\AssignmentRepository;
+use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class AssignmentController extends Controller
 {
     use AuthorizesRequests;
-
-    private AssignmentRepository$assignmentRepository;
-
-    public function __construct(AssignmentRepository $assignmentRepository)
-    {
-        $this->assignmentRepository = $assignmentRepository;
-    }
 
     /**
      * Display a listing of the resource.
@@ -29,16 +25,38 @@ class AssignmentController extends Controller
     public function index(Request $request, Classroom $classroom): View
     {
         $this->authorize('viewAny', [Assignment::class, $classroom]);
-        
-        $assignments = $this->assignmentRepository->getAssignments($classroom, $request->all());
+
+        // 1. On récupère le rôle avec 'STUDENT' comme valeur par défaut
+        $role = $request->query('role', 'STUDENT');
 
         $academicYear = AcademicYear::findOrFail($classroom->academic_year_id);
 
-        return view('assignments.index', [
+        // 2. Traitement selon le rôle
+        if ($role === 'TEACHER') {
+            $assignments = Assignment::where('classroom_id', $classroom->id)
+                ->whereHas('user', fn ($q) => $q->where('role', 'TEACHER'))
+                ->with(['user', 'subject'])
+                ->get()
+                ->sortBy('user.last_name');
+
+            return view('assignments.teachers', [
+                'academicYear' => $academicYear,
+                'classroom' => $classroom,
+                'assignments' => $assignments,
+            ]);
+        }
+
+        // Vue élèves par défaut
+        $assignments = Assignment::where('classroom_id', $classroom->id)
+            ->whereHas('user', fn ($q) => $q->where('role', 'STUDENT'))
+            ->with('user')
+            ->get()
+            ->sortBy('user.last_name');
+
+        return view('assignments.students', [
             'academicYear' => $academicYear,
             'classroom' => $classroom,
             'assignments' => $assignments,
-            'role' => $request->query('role', '')
         ]);
     }
 
@@ -61,7 +79,7 @@ class AssignmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Assignment $assignment)
+    public function show(Assignment $assignment):void
     {
         //
     }
@@ -85,8 +103,21 @@ class AssignmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Assignment $assignment)
+    public function destroy(Classroom $classroom, Assignment $assignment): RedirectResponse
     {
-        //
+        $this->authorize('delete', $assignment);
+        $academicYear = AcademicYear::findOrFail($classroom->academic_year_id);
+        $user = User::findOrfail($assignment->user_id);
+
+        abort_if($academicYear->status === AcademicYearStatus::ARCHIVED, 403, 'Année scolaire archivée : suppression impossible');
+        try {
+            $assignment->delete();
+
+            return redirect()->route('assignments.index', ['classroom' => $classroom, 'role' => $user->role])->with('success', "$user->full_name retiré de la classe $classroom->name");
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+
+            return back()->with('error', 'Error, affectation non supprimée')->withInput();
+        }
     }
 }
