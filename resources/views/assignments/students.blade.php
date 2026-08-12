@@ -1,23 +1,31 @@
 @extends('layout')
 
-@section('title', 'Liste des affectations')
+@section('title', 'Liste des élèves')
 
 @section('content')
 
 @include('errors.session-values')
 
-<div class="row g-4">
+<div class="row g-2">
 
     <div class="d-flex justify-content-between align-items-center">
         <div>
             <h1 class="fw-bold">Année : {{ $academicYear->name }} - Classe : {{ $classroom->name }}</h1>
 
-            <h1 class="fw-bold">Liste des affectations <span class="badge bg-secondary-subtle text-secondary-emphasis fs-6 fw-normal align-middle ms-2">
+            <h1 class="fw-bold">
+                Liste des élèves
+                <span class="badge bg-secondary-subtle text-secondary-emphasis fs-6 fw-normal align-middle ms-2">
                     {{ $assignments->count() }}
-                </span></h1>
+                </span>
+            </h1>
         </div>
 
+
+
         <div class="d-flex gap-2">
+            <a href="{{ route('assignments.index', ['classroom' => $classroom, 'role' => 'TEACHER']) }}" class="btn btn-light btn-sm border">
+                Liste des enseignants
+            </a>
             @can('create', App\Models\Assignment::class)
             <a href="{{ route('assignments.create', $classroom) }}"
                 class="btn btn-primary btn-sm">
@@ -27,65 +35,17 @@
         </div>
     </div>
 
-    {{-- FILTERS --}}
-    <div class="col-12 col-lg-3">
-
-        <div class="card border-0 shadow-sm">
-            <div class="card-body">
-
-                <h2>Filtres</h2>
-
-                <form action="{{ route('assignments.index', $classroom) }}">
-
-
-
-                    {{-- role --}}
-                    <div class="mb-1">
-                        <x-select-user-role name="role"
-                            id="role"
-                            class="form-select form-select-sm"
-                            :value="$role" />
-                    </div>
-
-                    {{-- submit --}}
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-secondary btn-sm">
-                            Appliquer
-                        </button>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-    </div>
 
     {{-- ===== --}}
     {{-- TABLE --}}
     {{-- ===== --}}
-    <div class="col-12 col-lg-9">
-
+    <div class="col-12">
         <div class="card border-0 shadow-sm">
-
-
-
             {{-- TABLE --}}
             <div class="card-body p-0">
-
                 <div class="table-responsive">
-
                     <table class="table table-hover align-middle mb-0">
-
-                        <thead class="table-light">
-                            <tr>
-                                <th>Utilisateur</th>
-                                <th>Rôle</th>
-
-                                <th class="text-end"></th>
-                            </tr>
-                        </thead>
-
                         <tbody>
-
                             @foreach ($assignments as $assignment)
                             <tr>
 
@@ -110,30 +70,15 @@
                                     </div>
                                 </td>
 
-                                {{-- ROLE --}}
-                                <td>
-                                    <span class="badge {{ $assignment->user->role->badgeClass() }}">
-                                        {{ $assignment->user->role->label() }}
-                                    </span>
-
-                                    @if($assignment->subject)
-                                    <span class="badge border text-dark" style="background-color: {{ $assignment->subject->color }}">
-                                        {{ $assignment->subject->short_name }}
-                                    </span>
-                                    @endif
-                                </td>
-
-
-
                                 {{-- ACTIONS --}}
                                 <td class="text-end">
 
                                     @can('delete', $assignment)
-                                    <button class="btn btn-sm  btn-link btn-delete-user"
+                                    <button class="btn btn-sm  btn-link btn-delete-assignment"
                                         data-bs-toggle="modal"
                                         data-bs-target="#exampleModal"
                                         data-id="{{ $assignment->id }}"
-                                        data-role="{{ $assignment->user->role->label() }}"
+                                        data-classroom="{{ $classroom->name }}"
                                         data-user-name="{{ $assignment->user->full_name }}">
                                         <i class="bi bi-trash"></i>
                                     </button>
@@ -149,15 +94,9 @@
                     </table>
 
                 </div>
-
             </div>
-
-
-
         </div>
-
     </div>
-
 </div>
 
 {{-- ============ --}}
@@ -170,24 +109,26 @@
 
             <div class="modal-header">
                 <p class="modal-title">
-                    Supprimer <span id="user-name-to-delete"></span> (<span id="user-role-to-delete"></span>)
+                    Supprimer cette affectation ?
                 </p>
 
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
             <div class="modal-body">
-                <p class="text-danger fw-bold">
-                    Cette action est définitive.
-                </p>
+                <p class="text-danger fw-bold">Voulez vous vraiment supprimer cette affectation ?</p>
+                <ul>
+                    <li>Nom : <span id="user-name-to-delete"></span></li>
+                    <li>Classe : <span id="classroom-to-delete"></span></li>
+                </ul>
                 <p class="text-muted small">
-                    Les données liées (affectations, resultats, etc.. ) seront également supprimées.
+                    Cette action est définitive. Vous pouvez également mettre une date de fin d'affectation à cet élève au lieu de supprimer son affectation.
                 </p>
             </div>
 
             <div class="modal-footer">
 
-                <form id="form-delete-user" method="POST">
+                <form id="form-delete-assignment" method="POST">
                     @csrf
                     @method('DELETE')
 
@@ -219,14 +160,14 @@
 <script>
     $(document).ready(function() {
 
-        $('.btn-delete-user').click(function() {
-            let userId = $(this).attr('data-id')
-            let role = $(this).attr('data-role')
+        $('.btn-delete-assignment').click(function() {
+            let assignmentId = $(this).attr('data-id')
+            let classroom = $(this).attr('data-classroom')
             let userName = $(this).attr('data-user-name')
 
             $('#user-name-to-delete').text(userName)
-            $('#user-role-to-delete').text(role)
-            $('#form-delete-user').attr('action', '/users/' + userId)
+            $('#classroom-to-delete').text(classroom)
+            $('#form-delete-assignment').attr('action', '/classrooms/{{$classroom->id}}/assignments/' + assignmentId)
         })
 
     });

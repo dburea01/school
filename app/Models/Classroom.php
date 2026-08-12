@@ -48,8 +48,8 @@ class Classroom extends Model
     public function students(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'assignments')
-                    ->where('users.role', UserRole::STUDENT)
-                    ->distinct();
+            ->where('users.role', UserRole::STUDENT)
+            ->distinct();
     }
 
     // Enseignants affectés (filtrés par le rôle TEACHER)
@@ -57,7 +57,7 @@ class Classroom extends Model
     public function teachers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'assignments')
-                    ->where('users.role', UserRole::TEACHER)
-                    ->distinct();
+            ->where('users.role', UserRole::TEACHER)
+            ->distinct();
     }
 }

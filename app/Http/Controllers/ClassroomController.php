@@ -82,7 +82,7 @@ class ClassroomController extends Controller
         return view('classrooms.edit', [
             'academicYear' => $academicYear,
             'classroom' => $classroom,
-            'pageTitle' => 'Modifier classe ' . $classroom->name . ' (' . $classroom->short_name . ')',
+            'pageTitle' => 'Modifier classe '.$classroom->name.' ('.$classroom->short_name.')',
         ]);
     }
 
